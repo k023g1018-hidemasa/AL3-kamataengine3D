@@ -4,16 +4,48 @@
 
 GameScene::GameScene() {}
 
-GameScene::~GameScene() {}
+GameScene::~GameScene() {
+
+	delete sprite_;
+
+	delete model_;
+}
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+	textureHandle_ = TextureManager::Load("sample.png");
+	sprite_ = Sprite::Create(textureHandle_, {100, 50});
+	// 3dモデルの生成
+	model_ = Model::Create();
+	// ワールドトランスフォームの初期化
+	worldTransform_.Initialize();
+	// ビュープロジェクションの初期化
+	viewProjection_.Initialize();
+	// サウンドデータの読み込み
+	soundDataHandle_ = audio_->LoadWave("mokugyo.wav");
+	// 音声再生
+	audio_->PlayWave(soundDataHandle_);
+	// 音声再生
+	voiceHandle_ = audio_->PlayWave(soundDataHandle_, true);
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+	// スプライトの今の座標を取得
+	Vector2 position = sprite_->GetPosition();
+	// 座標を｛2，1｝移動
+	position.x += 2.0f; // 毎回通るから継続移動
+	position.y += 1.0f;
+	// 移動した座標をスプライトに反映
+	sprite_->SetPosition(position);
+	// スペース押したとき
+	if (input_->TriggerKey(DIK_SPACE)) {
+		// 音声停止
+		audio_->StopWave(voiceHandle_);
+	}
+}
 
 void GameScene::Draw() {
 
@@ -28,6 +60,8 @@ void GameScene::Draw() {
 	/// ここに背景スプライトの描画処理を追加できる
 	/// </summary>
 
+	sprite_->Draw();
+
 	// スプライト描画後処理
 	Sprite::PostDraw();
 	// 深度バッファクリア
@@ -41,6 +75,8 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	// 3ｄモデル描画
+	model_->Draw(worldTransform_, viewProjection_, textureHandle_);
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();

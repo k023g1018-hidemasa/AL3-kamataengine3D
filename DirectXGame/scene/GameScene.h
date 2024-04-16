@@ -18,6 +18,12 @@ public: // メンバ関数
 	/// コンストクラタ
 	/// </summary>
 	GameScene();
+	Sprite* sprite_ = nullptr;
+	Model* model_ = nullptr;
+	//ワールドトランスフォーム
+	WorldTransform worldTransform_;
+	//ビュープロジェクション
+	ViewProjection viewProjection_;
 
 	/// <summary>
 	/// デストラクタ
@@ -43,6 +49,10 @@ private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
 	Audio* audio_ = nullptr;
+	//テクスチャハンドル
+	uint32_t textureHandle_ = 0;
+	uint32_t soundDataHandle_ = 0;
+	uint32_t voiceHandle_ = 0;
 
 	/// <summary>
 	/// ゲームシーン用
