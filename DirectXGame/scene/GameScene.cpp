@@ -2,18 +2,39 @@
 #include "TextureManager.h"
 #include <cassert>
 
-GameScene::GameScene() {}
+GameScene::GameScene() {
 
-GameScene::~GameScene() {}
+}
+
+GameScene::~GameScene() { 
+	delete model_;
+	delete player_;
+
+}
 
 void GameScene::Initialize() {
 
 	dxCommon_ = DirectXCommon::GetInstance();
 	input_ = Input::GetInstance();
 	audio_ = Audio::GetInstance();
+
+	texturHandle_ = TextureManager::Load("cube/cube.jpg");//キャラ画像淹れる
+	model_ = Model::Create();
+	viewProjection_.Initialize();
+	worldTransform_.Initialize();
+
+	//自キャラの生成
+	player_ = new Player();
+	//自キャラの初期化
+	player_->Initialize(model_,texturHandle_);
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+
+//自キャラの更sin
+	player_->Update();
+
+}
 
 void GameScene::Draw() {
 
@@ -41,6 +62,10 @@ void GameScene::Draw() {
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
 	/// </summary>
+	//model_->Draw(worldTransform_,viewProjection_,)
+	//自キャラの描画
+	player_->Draw();
+
 
 	// 3Dオブジェクト描画後処理
 	Model::PostDraw();
