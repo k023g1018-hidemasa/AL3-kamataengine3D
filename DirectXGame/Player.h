@@ -1,7 +1,7 @@
 #pragma once
 #include"Model.h"
 #include"WorldTransform.h"
-
+#include"ViewProjection.h"
 
 ///自クラス
 class Player {
@@ -15,9 +15,15 @@ public:
 	/// </summary>
 	~Player();
 	/// <summary>
-	/// 初期化処理
+	/// 
 	/// </summary>
-	void Initialize(Model*model,uint32_t textureHandle);
+	/// <param name="model">モデルのポインタ</param>
+	/// <param name="textureHandle">テクスチャハンドル</param>
+	/// <param name="viewProjection">ビュープロジェクション</param>
+	void Initialize(
+		Model*model,uint32_t textureHandle,ViewProjection* viewProjection
+	
+	);
 	/// <summary>
 	/// 更新処理
 	/// </summary>
@@ -40,7 +46,7 @@ private://変数は変えるよってなったら変わるからプライベー�
 	/// モデル//一旦預かるだけ
 	/// </summary>
 	Model* model_ = nullptr;
-
+	ViewProjection* viewProjection_ = nullptr;
 	/// <summary>
 	/// テクスチャハンドル
 	/// </summary>

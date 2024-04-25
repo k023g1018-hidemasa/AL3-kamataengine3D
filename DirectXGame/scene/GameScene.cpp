@@ -26,7 +26,7 @@ void GameScene::Initialize() {
 	//自キャラの生成
 	player_ = new Player();
 	//自キャラの初期化
-	player_->Initialize(model_,texturHandle_);
+	player_->Initialize(model_,texturHandle_,&viewProjection_);
 }
 
 void GameScene::Update() {
