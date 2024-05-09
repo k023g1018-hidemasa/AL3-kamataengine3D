@@ -2,6 +2,13 @@
 #include "TextureManager.h"
 #include <cassert>
 
+void Expansion()
+
+
+
+
+
+
 GameScene::GameScene() {}
 
 GameScene::~GameScene() {
@@ -22,9 +29,44 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	blockModel_ = Model::Create();
+	BlockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
+
+	//要素数,ここ変えれば配置する数が変わる
+	const uint32_t kNumBlockHorizontal = 20;
+	//ブロック一個分の横幅、ブロック自体の大きさみたいなもの
+	const float kBlockwidth = 2.0f;
+	//要素数を変更する、可変長は最初はゼロだからつ要素を作っている（ｎｗＵ）
+	worldTransformBlocks_.resize(kNumBlockHorizontal);
+
+	//キューブの生成
+	for (uint32_t i = 0; i < kNumBlockHorizontal; ++i) {
+	
+		worldTransformBlocks_[i] = new WorldTransform();//黄色文字
+		worldTransformBlocks_[i]->Initialize();
+		worldTransformBlocks_[i]->translation_.x = kBlockwidth * i;
+		worldTransformBlocks_[i]->translation_.y = 0.0f;
+
+	}
+
 }
 
-void GameScene::Update() {}
+void GameScene::Update() {
+
+	//ブロックの更新
+	for (WorldTransform* worldTransformBlock : worldTransformBlocks_) {
+	
+
+
+
+
+		worldTransformBlock->matWorld_;
+		//定数バッファに転送
+		worldTransformBlock->TransferMatrix();
+	
+	}
+
+
+}
 
 void GameScene::Draw() {
 
