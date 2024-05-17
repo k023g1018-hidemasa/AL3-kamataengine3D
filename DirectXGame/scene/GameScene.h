@@ -8,6 +8,8 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include<vector>
+#include"MTFunction.h"
+#include "DebugCamera.h"
 
 
 /// <summary>
@@ -50,7 +52,14 @@ private: // メンバ変数
 	uint32_t BlockTextureHandle_ = 0u;
 	// 要素数が分からないから(可変できる配列)、多分ふぉｒで回してブロックの数文っていうやり方？
 	// ：の後ろを参照して消す：の前が一個ずつずらしてくれる、とりあえず全部に命令できる
-	std::vector<WorldTransform*> worldTransformBlocks_;
+	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
+	//ViewProjection viewProjection_;
+	ViewProjection viewProjection_;
+	bool isDebugCameraActive_ = false;
+	DebugCamera* debugCamera_ = nullptr;
+
+
+
 
 
 	/// <summary>
