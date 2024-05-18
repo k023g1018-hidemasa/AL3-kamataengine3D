@@ -2,10 +2,7 @@
 #include "TextureManager.h"
 #include <cassert>
 
-
 // #include"ViewProjection.h"
-
-
 
 GameScene::GameScene() {}
 
@@ -49,8 +46,8 @@ void GameScene::Initialize() {
 		worldTransformBlocks_[i].resize(kNumBlockHorizontal);
 	}
 	// ブロックの生成
-	for (uint32_t i = 0; i < kNumBlockVirtical; i+=2) {
-		for (uint32_t j = 0; j < kNumBlockHorizontal; j+=2) {
+	for (uint32_t i = 0; i < kNumBlockVirtical; i += 2) {
+		for (uint32_t j = 0; j < kNumBlockHorizontal; j += 2) {
 			worldTransformBlocks_[i][j] = new WorldTransform();
 			worldTransformBlocks_[i][j]->Initialize();
 			worldTransformBlocks_[i][j]->translation_.x = kBulockWidth * j;
@@ -62,8 +59,7 @@ void GameScene::Initialize() {
 
 	viewProjection_.Initialize();
 
-		debugCamera_ = new DebugCamera(1280, 720);
-
+	debugCamera_ = new DebugCamera(1280, 720);
 }
 
 void GameScene::Update() {
@@ -81,24 +77,23 @@ void GameScene::Update() {
 	}
 #ifdef _DEBUG
 
-			if (input_->TriggerKey(DIK_0)) {
-		if (isDebugCameraActive_) {
-			debugCamera_->Update();
-			viewProjection_.matView = ;
-			viewProjection_.matProjection = ;
+	if (input_->TriggerKey(DIK_0)) {
 
-			viewProjection_.TransferMatrix();
-		}else{
 
-			viewProjection_.UpdateMatrix();
-				}
+		isDebugCameraActive_ = true;
+	}
+	if (isDebugCameraActive_) {
+		debugCamera_->Update();
+		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
+		viewProjection_.matProjection = debugCamera_->GetViewProjection().matProjection;
 
-			}
+		viewProjection_.TransferMatrix();
+	} else {
 
+		viewProjection_.UpdateMatrix();
+	}
 
 #endif // _DEBUG
-
-
 }
 
 void GameScene::Draw() {
@@ -124,7 +119,6 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
-	
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
 			if (!worldTransformBlock) {
@@ -133,8 +127,6 @@ void GameScene::Draw() {
 			blockModel_->Draw(*worldTransformBlock, viewProjection_, BlockTextureHandle_);
 		}
 	}
-
-
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
