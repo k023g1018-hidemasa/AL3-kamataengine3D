@@ -9,14 +9,17 @@ GameScene::GameScene() {}
 GameScene::~GameScene() {
 
 	delete blockModel_;
+	delete skydome_;
 
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
 			delete worldTransformBlock;
 		}
+		worldTransformBlocks_.clear();
 	}
-	worldTransformBlocks_.clear();
 	delete debugCamera_;
+	// 破壊と創造はセットで
+	delete modelSkydome_;
 }
 
 void GameScene::Initialize() {
@@ -26,7 +29,7 @@ void GameScene::Initialize() {
 	audio_ = Audio::GetInstance();
 
 	blockModel_ = Model::Create();
-	BlockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
+	blockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
 
 	// 要素数,ここ変えれば配置する数が変わる
 	// 要素数
@@ -60,6 +63,11 @@ void GameScene::Initialize() {
 	viewProjection_.Initialize();
 
 	debugCamera_ = new DebugCamera(1280, 720);
+	
+	// 天球を内部的に作る
+	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
+	skydome_ = new Skydome;
+	skydome_->Initialize(modelSkydome_, &viewProjection_);
 }
 
 void GameScene::Update() {
@@ -78,10 +86,9 @@ void GameScene::Update() {
 #ifdef _DEBUG
 
 	if (input_->TriggerKey(DIK_0)) {
-
-
-		isDebugCameraActive_ = true;
+		isDebugCameraActive_ ^= true;
 	}
+
 	if (isDebugCameraActive_) {
 		debugCamera_->Update();
 		viewProjection_.matView = debugCamera_->GetViewProjection().matView;
@@ -89,11 +96,12 @@ void GameScene::Update() {
 
 		viewProjection_.TransferMatrix();
 	} else {
-
 		viewProjection_.UpdateMatrix();
 	}
 
 #endif // _DEBUG
+
+	skydome_->Update();
 }
 
 void GameScene::Draw() {
@@ -119,12 +127,15 @@ void GameScene::Draw() {
 	// 3Dオブジェクト描画前処理
 	Model::PreDraw(commandList);
 
+	skydome_->Draw();
+	//modelSkydome_->Draw(worldTransform_, viewProjection_);
+
 	for (std::vector<WorldTransform*>& worldTransformBlockLine : worldTransformBlocks_) {
 		for (WorldTransform* worldTransformBlock : worldTransformBlockLine) {
 			if (!worldTransformBlock) {
 				continue;
 			}
-			blockModel_->Draw(*worldTransformBlock, viewProjection_, BlockTextureHandle_);
+			blockModel_->Draw(*worldTransformBlock, viewProjection_, blockTextureHandle_);
 		}
 	}
 

@@ -10,6 +10,7 @@
 #include<vector>
 #include"MTFunction.h"
 #include "DebugCamera.h"
+#include"Skydome.h"
 
 
 /// <summary>
@@ -49,20 +50,20 @@ private: // メンバ変数
 	Audio* audio_ = nullptr;
 
 	Model* blockModel_=nullptr;
-	uint32_t BlockTextureHandle_ = 0u;
+	uint32_t blockTextureHandle_ = 0u;
 	// 要素数が分からないから(可変できる配列)、多分ふぉｒで回してブロックの数文っていうやり方？
 	// ：の後ろを参照して消す：の前が一個ずつずらしてくれる、とりあえず全部に命令できる
 	std::vector<std::vector<WorldTransform*>> worldTransformBlocks_;
-	//ViewProjection viewProjection_;
+
+	WorldTransform worldTransform_;
 	ViewProjection viewProjection_;
+
 	bool isDebugCameraActive_ = false;
 	DebugCamera* debugCamera_ = nullptr;
 
+	//これの名前で呼び出せばｈにあるやつは使えるからわかりやすく？
+	Skydome* skydome_ = nullptr;
+	Model* modelSkydome_ = nullptr;
 
 
-
-
-	/// <summary>
-	/// ゲームシーン用
-	/// </summary>
 };
