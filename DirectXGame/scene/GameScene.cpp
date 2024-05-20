@@ -20,6 +20,8 @@ GameScene::~GameScene() {
 	delete debugCamera_;
 	// 破壊と創造はセットで
 	delete modelSkydome_;
+
+	delete mapChipField_;
 }
 
 void GameScene::Initialize() {
@@ -68,6 +70,11 @@ void GameScene::Initialize() {
 	modelSkydome_ = Model::CreateFromOBJ("skydome", true);
 	skydome_ = new Skydome;
 	skydome_->Initialize(modelSkydome_, &viewProjection_);
+
+	mapChipField_ = new MapChipField;
+	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
+	//ｃｓｖを通った後にジェネレイトをする
+	GenerateBlocks();
 }
 
 void GameScene::Update() {
@@ -160,3 +167,5 @@ void GameScene::Draw() {
 
 #pragma endregion
 }
+
+

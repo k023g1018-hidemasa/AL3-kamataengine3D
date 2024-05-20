@@ -11,6 +11,7 @@
 #include"MTFunction.h"
 #include "DebugCamera.h"
 #include"Skydome.h"
+#include"MapchipField.h"
 
 
 /// <summary>
@@ -44,6 +45,9 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
+	void GenerateBlocks();
+
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -64,6 +68,8 @@ private: // メンバ変数
 	//これの名前で呼び出せばｈにあるやつは使えるからわかりやすく？
 	Skydome* skydome_ = nullptr;
 	Model* modelSkydome_ = nullptr;
+
+	MapChipField* mapChipField_;
 
 
 };
