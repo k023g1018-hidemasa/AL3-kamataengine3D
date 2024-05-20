@@ -33,35 +33,6 @@ void GameScene::Initialize() {
 	blockModel_ = Model::Create();
 	blockTextureHandle_ = TextureManager::Load("cube/cube.jpg");
 
-	// 要素数,ここ変えれば配置する数が変わる
-	// 要素数
-	const uint32_t kNumBlockVirtical = 10;
-	const uint32_t kNumBlockHorizontal = 20;
-	// ブロック一個分の横幅、ブロック自体の大きさみたいなもの
-
-	// ブロック1個分の横幅
-	const float kBulockWidth = 2.0f;
-	const float kBlockHeight = 2.0f;
-
-	// 要素数を変更
-	// 列数を設定(縦方向のブロック数)
-	worldTransformBlocks_.resize(kNumBlockVirtical);
-	for (uint32_t i = 0; i < kNumBlockVirtical; ++i) {
-		// 1列の要素数を設定（横方向のブロック数）
-		worldTransformBlocks_[i].resize(kNumBlockHorizontal);
-	}
-	// ブロックの生成
-	for (uint32_t i = 0; i < kNumBlockVirtical; i += 2) {
-		for (uint32_t j = 0; j < kNumBlockHorizontal; j += 2) {
-			worldTransformBlocks_[i][j] = new WorldTransform();
-			worldTransformBlocks_[i][j]->Initialize();
-			worldTransformBlocks_[i][j]->translation_.x = kBulockWidth * j;
-			worldTransformBlocks_[i][j]->translation_.y = kBlockHeight * i;
-		}
-	}
-	// 要素数を変更する、可変長は最初はゼロだからつ要素を作っている（ｎｗＵ）
-	worldTransformBlocks_.resize(kNumBlockHorizontal);
-
 	viewProjection_.Initialize();
 
 	debugCamera_ = new DebugCamera(1280, 720);
@@ -74,7 +45,7 @@ void GameScene::Initialize() {
 	mapChipField_ = new MapChipField;
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 	//ｃｓｖを通った後にジェネレイトをする
-	//GenerateBlocks();
+	GenerateBlocks();
 }
 
 void GameScene::Update() {
@@ -166,6 +137,38 @@ void GameScene::Draw() {
 	Sprite::PostDraw();
 
 #pragma endregion
+}
+
+void GameScene::GenerateBlocks() {
+
+	// 要素数,ここ変えれば配置する数が変わる
+	// 要素数
+	//バーティ縦ホリゾン横
+	 uint32_t numBlockVirtical = mapChipField_->GetNumBlockVirtical();
+	 uint32_t numBlockHorizontal = mapChipField_->GetNumBlockHorizontal();
+	
+	// 要素数を変更
+	// 列数を設定(縦方向のブロック数)
+	worldTransformBlocks_.resize(numBlockVirtical);
+	for (uint32_t i = 0; i < numBlockVirtical; ++i) {
+		// 1列の要素数を設定（横方向のブロック数）
+		worldTransformBlocks_[i].resize(numBlockHorizontal);
+	}
+	// ブロックの生成
+	for (uint32_t i = 0; i < numBlockVirtical; ++i) {
+		for (uint32_t j = 0; j < numBlockHorizontal; ++j) {
+			if (mapChipField_->GetMapChipTypeByIndex(j, i) == MapChipType::kBlock) {
+			WorldTransform*worldTransform = new WorldTransform();
+			worldTransform->Initialize();
+			worldTransformBlocks_[i][j]=worldTransform;
+			worldTransformBlocks_[i][j]->translation_ = mapChipField_->GetMaoChipPositionByIndex(j,i);
+			}
+		}
+	}
+	// 要素数を変更する、可変長は最初はゼロだからつ要素を作っている（ｎｗＵ）
+	worldTransformBlocks_.resize(numBlockHorizontal);
+
+
 }
 
 

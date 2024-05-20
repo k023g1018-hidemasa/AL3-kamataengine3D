@@ -58,6 +58,11 @@ void MapChipField::LoadMapChipCsv(const std::string& filePath) {
 }
 Vector3 MapChipField::GetMaoChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) { return Vector3(kBlockWidth * xIndex, kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 0); }
 
+uint32_t MapChipField::GetNumBlockVirtical() { return kNumBlockVirtical; }
+
+uint32_t MapChipField::GetNumBlockHorizontal() { return kNumBlockHorizontal; }
+
+
 
 
 MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex) {
@@ -68,6 +73,6 @@ MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex
 		return MapChipType::kBlank;
 	}
 
-	// return mapChipData_[yIndex][xIndex];
-	return MapChipType();
+	 return mapChipData_.data[yIndex][xIndex];
+	//return MapChipType();
 }

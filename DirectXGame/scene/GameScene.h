@@ -45,7 +45,7 @@ public: // メンバ関数
 	/// </summary>
 	void Draw();
 
-//	void GenerateBlocks();
+	void GenerateBlocks();
 
 
 private: // メンバ変数
