@@ -74,7 +74,7 @@ void GameScene::Initialize() {
 	mapChipField_ = new MapChipField;
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 	//ｃｓｖを通った後にジェネレイトをする
-	GenerateBlocks();
+	//GenerateBlocks();
 }
 
 void GameScene::Update() {
