@@ -12,6 +12,7 @@
 #include "DebugCamera.h"
 #include"Skydome.h"
 #include"MapchipField.h"
+#include"player.h"
 
 
 /// <summary>
@@ -70,6 +71,9 @@ private: // メンバ変数
 	Model* modelSkydome_ = nullptr;
 
 	MapChipField* mapChipField_;
+	//キャラクターのテクスチャ
+	uint32_t texturHandle_ = 0;
 
-
+	Model* model_ = nullptr;
+	Player* player_ = nullptr;
 };

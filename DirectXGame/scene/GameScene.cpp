@@ -22,6 +22,9 @@ GameScene::~GameScene() {
 	delete modelSkydome_;
 
 	delete mapChipField_;
+
+	delete model_;
+	delete player_;
 }
 
 void GameScene::Initialize() {
@@ -46,6 +49,17 @@ void GameScene::Initialize() {
 	mapChipField_->LoadMapChipCsv("Resources/blocks.csv");
 	//ｃｓｖを通った後にジェネレイトをする
 	GenerateBlocks();
+
+	texturHandle_ = TextureManager::Load("sample.png"); // キャラ画像淹れる
+	model_ = Model::Create();
+	worldTransform_.Initialize();
+
+	//座標をマップっチップ 番号で指定
+	Vector3 playrePosition = mapChipField_->GetMaoChipPositionByIndex(1, 19);
+	// 自キャラの生成
+	player_ = new Player();
+	// 自キャラの初期化
+	player_->Initialize(model_, &viewProjection_,playrePosition);
 }
 
 void GameScene::Update() {
@@ -80,6 +94,11 @@ void GameScene::Update() {
 #endif // _DEBUG
 
 	skydome_->Update();
+
+
+	// 自キャラの更sin
+	player_->Update();
+
 }
 
 void GameScene::Draw() {
@@ -116,6 +135,8 @@ void GameScene::Draw() {
 			blockModel_->Draw(*worldTransformBlock, viewProjection_, blockTextureHandle_);
 		}
 	}
+	// 自キャラの描画
+	player_->Draw();
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
