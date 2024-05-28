@@ -25,6 +25,9 @@ GameScene::~GameScene() {
 
 	delete model_;
 	delete player_;
+
+
+
 }
 
 void GameScene::Initialize() {
@@ -55,7 +58,7 @@ void GameScene::Initialize() {
 	worldTransform_.Initialize();
 
 	//座標をマップっチップ 番号で指定
-	Vector3 playrePosition = mapChipField_->GetMaoChipPositionByIndex(1, 19);
+	Vector3 playrePosition = mapChipField_->GetMaoChipPositionByIndex(1, 18);
 	// 自キャラの生成
 	player_ = new Player();
 	// 自キャラの初期化
