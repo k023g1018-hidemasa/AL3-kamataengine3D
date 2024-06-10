@@ -63,6 +63,18 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, &viewProjection_,playrePosition);
+	//カメラ生成
+	cameraController_ = new CameraController();
+	//カメラの初期化
+	cameraController_->Initalize(&viewProjection_);
+	//ロックオン
+	cameraController_->SetTarget(player_);
+	//リセット
+	cameraController_->Reset();
+	//ここに移動範囲の指定？
+
+
+
 }
 
 void GameScene::Update() {
@@ -101,7 +113,8 @@ void GameScene::Update() {
 
 	// 自キャラの更sin
 	player_->Update();
-
+	//更新
+	cameraController_->Update();
 }
 
 void GameScene::Draw() {

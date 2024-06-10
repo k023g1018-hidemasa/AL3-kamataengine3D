@@ -13,6 +13,7 @@
 #include"Skydome.h"
 #include"MapchipField.h"
 #include"player.h"
+#include"CameraController.h"
 
 
 /// <summary>
@@ -76,4 +77,6 @@ private: // メンバ変数
 
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
+
+	CameraController* cameraController_ = nullptr;
 };

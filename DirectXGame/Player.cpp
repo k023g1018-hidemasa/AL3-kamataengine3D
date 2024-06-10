@@ -135,3 +135,7 @@ void Player::Draw() {
 	ImGui::InputFloat3("Velocity", &velocity_.x, "%.3f", ImGuiInputTextFlags_ReadOnly);
 	ImGui::End();*/
 }
+
+WorldTransform Player::GetWorldTransform() { return WorldTransform(); }
+
+

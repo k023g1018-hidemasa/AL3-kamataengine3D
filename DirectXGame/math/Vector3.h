@@ -8,13 +8,8 @@ struct Vector3 final {
 	float y;
 	float z;
 	
-	Vector3 operator+=(const Vector3& obj) {//機能の拡張をしてるからvectorの中に入れてヨシ
-		Vector3 num{};
-	num.x = x + obj.x;
-	num.y = y + obj.y;
-	num.z = z+ obj.z;
-	
-	return num;
-     }
-    
+	Vector3 operator+=(const Vector3& obj);
+
 };
+//二項演算子というもの+-*/当たりの演算子こいつらは外に出す
+Vector3 operator+(const Vector3& objA,const Vector3&objB );

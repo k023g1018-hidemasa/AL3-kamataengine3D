@@ -33,6 +33,8 @@ public:
 	/// </summary>
 	void Draw();
 
+	WorldTransform GetWorldTransform(); 
+
 private:
 	WorldTransform worldTransform_;
 	/// <summary>
@@ -65,4 +67,8 @@ private:
 	static inline const float kTimeTurn = 0.3f;
 	// 接地状態フラグ
 	bool onGround_ = true;
+	//自キャラの速度を取得
+	const Vector3& GetVelocity() const { return velocity_; }
+	
+
 };
