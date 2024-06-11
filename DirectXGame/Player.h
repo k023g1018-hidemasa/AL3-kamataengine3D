@@ -2,11 +2,30 @@
 #include "Input.h"
 #include "Model.h"
 #include "Vector3.h"
+#include"MapchipField.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include <cassert>
 #include <imgui.h>
 #include <numbers>
+
+class MapChipField;
+
+struct CollisionMapInfo {
+	bool ceiling = false;
+	bool landing = false;
+	bool hitWall = false;
+	Vector3 move;
+};
+// 角
+enum Corner {
+	kRightBottom, // 右下
+	kLeftBottom,  // 左下
+	kRightTop,    // 右上
+	kLeftTop,     // 左上
+
+	kNumCorner // enumの要素数ここを見ると何個あるかわかる
+};
 
 enum class LRDirection {
 	kRight,
@@ -34,8 +53,17 @@ public:
 	void Draw();
 
 	WorldTransform GetWorldTransform(); 
+	void SetMapChipField(MapChipField* mapChipField) { mapChipField_=mapChipField; };
+	
 
 private:
+	void FuncMove();
+	void CollisionMap(CollisionMapInfo& info);//紺ストは付けない中身は変わるから
+	void CollisionMapTop(CollisionMapInfo& info);
+	void CollisionMapBottom(CollisionMapInfo& info);
+	void CollisionMapLeft(CollisionMapInfo& info);
+	void CollisionMapRight(CollisionMapInfo& info);
+
 	WorldTransform worldTransform_;
 	/// <summary>
 	/// モデル//一旦預かるだけ
@@ -69,6 +97,13 @@ private:
 	bool onGround_ = true;
 	//自キャラの速度を取得
 	const Vector3& GetVelocity() const { return velocity_; }
+	//マップチップでフィールドを作った
+	MapChipField* mapChipField_ = nullptr;
+
+	static inline const float kWidth = 0.8f;
+	static inline const float kHeight = 0.8f;
+
+	Vector3 CornerPostion(const Vector3& center, Corner corner);
 	
 
 };

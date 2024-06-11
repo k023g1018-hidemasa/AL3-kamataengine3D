@@ -73,6 +73,7 @@ void GameScene::Initialize() {
 	cameraController_->Reset();
 	//ここに移動範囲の指定？
 
+	player_->SetMapChipField(mapChipField_);
 
 
 }
