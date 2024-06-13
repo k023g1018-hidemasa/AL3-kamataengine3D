@@ -75,8 +75,18 @@ IndexSet MapChipField::GetMapChipIndexSetByPosition(const Vector3& position) {
 	    return indexSet;
 }
 
+Rect MapChipField::GetRectByIndex(uint32_t xIndex, uint32_t yIndex) { 
 
+Vector3 center = GetMaoChipPositionByIndex(xIndex, yIndex);
 
+Rect rect;
+rect.left = center.x - kBlockWidth / 2.0f;
+rect.right = center.x + kBlockWidth / 2.0f;
+rect.bottom = center.y - kBlockHeight / 2.0f;
+rect.top = center.y + kBlockHeight / 2.0f;
+
+return rect;
+}
 
 MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex) {
 	if (xIndex < 0 || kNumBlockHorizontal - 1 < xIndex) {
@@ -89,3 +99,6 @@ MapChipType MapChipField::GetMapChipTypeByIndex(uint32_t xIndex, uint32_t yIndex
 	 return mapChipData_.data[yIndex][xIndex];
 	//return MapChipType();
 }
+
+
+

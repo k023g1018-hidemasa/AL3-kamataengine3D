@@ -32,6 +32,8 @@ enum class LRDirection {
 	kLeft,
 };
 
+
+
 class Player {
 public:
 	/// <summary>
@@ -54,6 +56,7 @@ public:
 
 	WorldTransform GetWorldTransform(); 
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_=mapChipField; };
+	void TouchCeiling(const CollisionMapInfo& info);
 	
 
 private:
@@ -104,6 +107,7 @@ private:
 	static inline const float kHeight = 0.8f;
 
 	Vector3 CornerPostion(const Vector3& center, Corner corner);
+	static inline const float kBlank = 0.2f;//めり込まない数値？
 	
 
 };
