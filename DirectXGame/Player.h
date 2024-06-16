@@ -33,7 +33,7 @@ public:
 	/// </summary>
 	void Draw();
 
-	WorldTransform GetWorldTransform(); 
+	WorldTransform& GetWorldTransform(); 
 
 private:
 	WorldTransform worldTransform_;

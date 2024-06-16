@@ -63,6 +63,7 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, &viewProjection_,playrePosition);
+
 	//カメラ生成
 	cameraController_ = new CameraController();
 	//カメラの初期化

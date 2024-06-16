@@ -18,6 +18,7 @@ void Player::Initialize(Model* model, ViewProjection* viewProjection, const Vect
 	// 初期回転角の指定//Y軸を90度右に回転、2π
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> / 2.0f;
 }
+
 void Player::Update() {
 	// 接地フラグ
 	bool landing = false;
@@ -136,6 +137,5 @@ void Player::Draw() {
 	ImGui::End();*/
 }
 
-WorldTransform Player::GetWorldTransform() { return WorldTransform(); }
-
+WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
 
