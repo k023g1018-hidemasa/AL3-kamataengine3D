@@ -31,7 +31,7 @@ void CameraController::Update() {
 
 	//座標保管によりちゅったり追従
 	viewProjection_->translation_ = Lerp(viewProjection_->translation_, targetCoordinates, kInterpolationRate);
-
+	//
 
 	//viewProjection_->translation_.x = targetWorldTransform.translation_.x + targetOffset_.x;
 	//viewProjection_->translation_.y = targetWorldTransform.translation_.y + targetOffset_.y;
