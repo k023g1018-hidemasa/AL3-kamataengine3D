@@ -114,7 +114,7 @@ WorldTransform Player::GetWorldTransform() { return WorldTransform(); }
 
 void Player::TouchCeiling(const CollisionMapInfo& info) {
 //天井に当たったか
-	if (collisionMapInfo) {//衝突フラグ
+	if (collisionMapInfo.) {//衝突フラグ
 	DebugText::GetInstance()->ConsolePrintf("hit ceiling\n");
 		velocity_.y = 0;
 	
@@ -223,7 +223,7 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 		indexSet = mapChipField_->GetMapChipIndexSetByPosition(Player::worldTransform_.translation_); // ここ穴あき
 		//めり込み先ブロックの範囲矩形
 		MapChipField::Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
-		info.move.y = std::max(0.0f, );
+		info.move.y = std::max(0.0f, info.move.y);//ｙ移動量
 		//天井に当たったことを記録する
 		info.hitWall = true;
 

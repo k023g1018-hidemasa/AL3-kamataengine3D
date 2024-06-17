@@ -11,13 +11,13 @@ class Player;
 class CameraController {
 public:
 
-	////くけい
-	//struct Rect {
-	//	float left = 0.0f;
-	//	float right = 1.0f;
-	//	float bottom = 0.0f;
-	//	float top = 1.0f;
-	//};
+	//くけい
+	struct Rect {
+		float left = 0.0f;
+		float right = 1.0f;
+		float bottom = 0.0f;
+		float top = 1.0f;
+	};
 	
 	void Initalize(ViewProjection* viewprojection);
 
@@ -27,7 +27,7 @@ public:
 
 	void Reset();
 
-//	void SetMovableArea(Rect area) { movableArea_=area; }
+	void SetMovableArea(Rect area) { movableArea_=area; }
 
 
 
@@ -38,7 +38,7 @@ private:
 	//追従対象とカメラの座標の差（おふぅセット）
 	Vector3 targetOffset_ = {0, 0, -15.0f};
 	//カメラ移動範囲
-//	Rect movableArea_ = {0,100,0,100};
+	Rect movableArea_ = {0,100,0,100};
 
 	//カメラの目標座標
 	Vector3 targetCoordinates;
