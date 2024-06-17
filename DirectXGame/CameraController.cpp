@@ -9,7 +9,7 @@ Vector3 Lerp(const Vector3& a, const Vector3& b, float t) {
 	// return{ t * a.x + (1.0f - t) * b.x ,t * a.y + (1.0f - t) * b.y };//かっこで囲ったら行けるらしい
 	resurt.x = t * a.x + (1.0f - t) * b.x;
 	resurt.y = t * a.y + (1.0f - t) * b.y;
-	resurt.z = t * a.z + (1.0f - t) * b.z;
+	resurt.z = t * a.z + (1.0f - t) * b.z;//らーぷあってんの//らーぷは通ってる
 	return resurt;
 }
 
@@ -29,8 +29,10 @@ void CameraController::Update() {
 	targetCoordinates.y = targetWorldTransform.translation_.y + targetOffset_.y;
 	targetCoordinates.z = targetWorldTransform.translation_.z + targetOffset_.z;
 
-	//座標保管によりちゅったり追従
+	//座標保管によりちゅったり追従 targetCoordinates
 	viewProjection_->translation_ = Lerp(viewProjection_->translation_, targetCoordinates, kInterpolationRate);
+	//らーぷに入れる数値も大丈夫でコールディナーと？も最終の座標だからそんなに気にしなくていい
+	// 、用は動いてるか動いてないかの問題であってらーぷの中身の数字が変わってるのか
 	//
 
 	//viewProjection_->translation_.x = targetWorldTransform.translation_.x + targetOffset_.x;

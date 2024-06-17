@@ -43,11 +43,13 @@ private:
 	Rect movableArea_ = {10,200,4,100};//ここの数字は都度都度変える、エリアの設定をするのは自動で合わせられないから？
 
 	//カメラの目標座標
-	Vector3 targetCoordinates;
+	Vector3 targetCoordinates;//こいつは最終の座標ここに元の座標をもってくる
 	//座標保管割合
-	static inline const float kInterpolationRate = 0.01f;
+	static inline const float kInterpolationRate = 0.0f;
 	//速度掛け率　速度に調整用の数値をかけてから足す
-	static inline const float kVelocityBias = 0.01f;
+	static inline const float kVelocityBias = 0.2f;
+	
+
 
 };
 
