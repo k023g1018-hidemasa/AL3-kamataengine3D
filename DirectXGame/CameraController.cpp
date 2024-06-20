@@ -28,7 +28,7 @@ void CameraController::Update() {
 	//追従対象のワールドトランスフォームを参照
 	const WorldTransform& targetWorldTransform = target_->GetWorldTransform();//数字が変わってない//カメラも中心じゃなくブロックに向いてる気がするからもしかしたらターゲットの問題？
 	//追従対象とオフセットからカメラの座標を計算//演算子のエラーもし動かなかったらここが原因かも（VECTOR3）
-	targetCoordinates.x = targetWorldTransform.translation_.x + targetOffset_.x+*kVelocityBias;
+	targetCoordinates.x = targetWorldTransform.translation_.x + targetOffset_.x;
 	targetCoordinates.y = targetWorldTransform.translation_.y + targetOffset_.y;
 	targetCoordinates.z = targetWorldTransform.translation_.z + targetOffset_.z;
 
