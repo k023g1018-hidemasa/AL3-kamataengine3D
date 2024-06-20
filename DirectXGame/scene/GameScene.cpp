@@ -183,7 +183,7 @@ void GameScene::GenerateBlocks() {
 	// 要素数
 	//バーティ縦ホリゾン横
 	 uint32_t numBlockVirtical = mapChipField_->GetNumBlockVirtical();
-	 uint32_t numBlockHorizontal = mapChipField_->GetNumBlockHorizontal();
+	 uint32_t numBlockHorizontal = mapChipField_-> GetNumBlockHorizontal();
 	
 	// 要素数を変更
 	// 列数を設定(縦方向のブロック数)

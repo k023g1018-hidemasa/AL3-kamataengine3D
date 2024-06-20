@@ -45,10 +45,11 @@ private:
 	//カメラの目標座標
 	Vector3 targetCoordinates;//こいつは最終の座標ここに元の座標をもってくる
 	//座標保管割合
-	static inline const float kInterpolationRate = 0.0f;
+	static inline const float kInterpolationRate = 0.2f;
 	//速度掛け率　速度に調整用の数値をかけてから足す
 	static inline const float kVelocityBias = 0.2f;
 	
+	Vector3 targetVelosity;
 
 
 };
