@@ -2,7 +2,6 @@
 #include "Input.h"
 #include "Model.h"
 #include "Vector3.h"
-#include"MapchipField.h"
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include <cassert>
@@ -15,7 +14,7 @@ struct CollisionMapInfo {
 	bool ceiling = false;
 	bool landing = false;
 	bool hitWall = false;
-	Vector3 move;
+	Vector3 move={0,0,0};
 };
 // 角
 enum Corner {
@@ -63,9 +62,9 @@ private:
 	void FuncMove();
 	void CollisionMap(CollisionMapInfo& info);//紺ストは付けない中身は変わるから
 	void CollisionMapTop(CollisionMapInfo& info);
-	void CollisionMapBottom(CollisionMapInfo& info);
+	/*void CollisionMapBottom(CollisionMapInfo& info);
 	void CollisionMapLeft(CollisionMapInfo& info);
-	void CollisionMapRight(CollisionMapInfo& info);
+	void CollisionMapRight(CollisionMapInfo& info);*/
 
 	WorldTransform worldTransform_;
 	/// <summary>

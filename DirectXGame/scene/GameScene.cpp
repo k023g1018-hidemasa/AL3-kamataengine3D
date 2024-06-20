@@ -4,7 +4,7 @@
 
 // #include"ViewProjection.h"
 
-GameScene::GameScene() {}
+GameScene::GameScene(){};
 
 GameScene::~GameScene() {
 

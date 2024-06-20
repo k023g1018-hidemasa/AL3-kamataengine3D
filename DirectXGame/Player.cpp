@@ -1,7 +1,8 @@
 #define NOMINMAX
 #include "Player.h"
+#include "MapchipField.h"
+#include <DebugText.h>
 #include <algorithm>
-#include<DebugText.h>
 
 Player::Player() {}
 
@@ -113,17 +114,11 @@ void Player::Draw() {
 WorldTransform Player::GetWorldTransform() { return WorldTransform(); }
 
 void Player::TouchCeiling(const CollisionMapInfo& info) {
-//天井に当たったか
-	if (collisionMapInfo.) {//衝突フラグ
-	DebugText::GetInstance()->ConsolePrintf("hit ceiling\n");
+	// 天井に当たったか
+	if (info.ceiling) { // 衝突フラグ
+		DebugText::GetInstance()->ConsolePrintf("hit ceiling\n");
 		velocity_.y = 0;
-	
-	
 	}
-
-
-
-
 }
 
 // 移動りょり
@@ -182,9 +177,9 @@ void Player::FuncMove() {
 // 衝突判定
 void Player::CollisionMap(CollisionMapInfo& info) {
 	CollisionMapTop(info);
-	CollisionMapBottom(info);
+	/*CollisionMapBottom(info);
 	CollisionMapLeft(info);
-	CollisionMapRight(info);
+	CollisionMapRight(info);*/
 }
 
 void Player::CollisionMapTop(CollisionMapInfo& info) {
@@ -193,9 +188,8 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 	if (info.move.y <= 0) {
 		return;
 	}
-
 	// 移動後の四つの過度の座標
-	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionsNew;
+	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionsNew{};
 
 	for (uint32_t i = 0; i < positionsNew.size(); ++i) {
 
@@ -212,29 +206,30 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 	if (mapChipType == MapChipType::kBlank) {
 		hit = true;
 	}
-	//右上点
+	// 右上点
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kRightTop)]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
 	if (mapChipType == MapChipType::kBlank) {
 		hit = true;
 	}
 	if (hit) {
-	    //めり込みを排除する方向に移動量を設定する
+		// めり込みを排除する方向に移動量を設定する
 		indexSet = mapChipField_->GetMapChipIndexSetByPosition(Player::worldTransform_.translation_); // ここ穴あき
-		//めり込み先ブロックの範囲矩形
-		MapChipField::Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
-		info.move.y = std::max(0.0f, info.move.y);//ｙ移動量
-		//天井に当たったことを記録する
-		info.hitWall = true;
+		// めり込み先ブロックの範囲矩形
+		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
+		info.move.y = std::max(0.0f, rect.bottom - worldTransform_.translation_.y - kHeight / 2.0f); // ｙ移動量
+
+		// 天井に当たったことを記録する
+		info.ceiling = true;
 	}
 }
 
-void Player::CollisionMapBottom(CollisionMapInfo& info) {}
-
-void Player::CollisionMapLeft(CollisionMapInfo& info) {}
-
-void Player::CollisionMapRight(CollisionMapInfo& info) {}
+// void Player::CollisionMapBottom(CollisionMapInfo& info) {}
+//
+// void Player::CollisionMapLeft(CollisionMapInfo& info) {}
+//
+// void Player::CollisionMapRight(CollisionMapInfo& info) {}
 
 Vector3 Player::CornerPostion(const Vector3& center, Corner corner) {
 
@@ -247,9 +242,3 @@ Vector3 Player::CornerPostion(const Vector3& center, Corner corner) {
 
 	return center + offsetTable[static_cast<uint32_t>(corner)];
 }
-
-
-
-
-
-
