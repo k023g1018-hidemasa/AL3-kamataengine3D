@@ -56,7 +56,8 @@ void MapChipField::LoadMapChipCsv(const std::string& filePath) {
 		}
 	}
 }
-Vector3 MapChipField::GetMaoChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) { return Vector3(kBlockWidth * xIndex, kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 0); }
+Vector3 MapChipField::GetMaoChipPositionByIndex(uint32_t xIndex, uint32_t yIndex) { return Vector3(kBlockWidth * xIndex, kBlockHeight * (kNumBlockVirtical - 1 - yIndex), 0); }//ここの数字がエグイ遠くなるらしいけどこれがどうなってるのやら
+
 
 uint32_t MapChipField::GetNumBlockVirtical() { return kNumBlockVirtical; }
 

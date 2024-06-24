@@ -14,6 +14,7 @@
 #include"MapchipField.h"
 #include"player.h"
 #include"CameraController.h"
+#include"Enemy.h"
 
 
 /// <summary>
@@ -73,10 +74,21 @@ private: // メンバ変数
 
 	MapChipField* mapChipField_;
 	//キャラクターのテクスチャ
-	uint32_t texturHandle_ = 0;
+	uint32_t texturHandle_ = 0u;
 
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
 
 	CameraController* cameraController_ = nullptr;
+
+	//えねみぃのテクスチャとかドローに使うやつ
+
+	uint32_t enemyTexturHandle_ = 0u;
+
+	Model* enemyModel_ = nullptr;
+	Enemy* enemy_ = nullptr;
+
+
+
+
 };

@@ -26,6 +26,8 @@ GameScene::~GameScene() {
 	delete model_;
 	delete player_;
 
+	delete enemy_;
+
 
 
 }
@@ -57,6 +59,12 @@ void GameScene::Initialize() {
 	model_ = Model::Create();
 	worldTransform_.Initialize();
 
+	//えねみぃのクリエイトとか
+
+	enemyTexturHandle_ = TextureManager::Load("sample.png");
+	enemyModel_ = Model::Create();
+	worldTransform_.Initialize();//いるかな？いらんかな
+
 	//座標をマップっチップ 番号で指定
 	Vector3 playrePosition = mapChipField_->GetMaoChipPositionByIndex(1, 18);
 	// 自キャラの生成
@@ -74,6 +82,13 @@ void GameScene::Initialize() {
 	//ここに移動範囲の指定？
 
 	player_->SetMapChipField(mapChipField_);
+
+	/////////////////////敵の生成
+	Vector3 enemyPosition = mapChipField_->GetMaoChipPositionByIndex(15, 18);//初期1でしょう//ｘｙの順番です
+	enemy_= new Enemy();
+	enemy_->Initialize(enemyModel_, &viewProjection_, enemyPosition);
+	
+	enemy_->SetMapChipField(mapChipField_);//最後のほうっだしイラン気がする
 
 
 }
@@ -116,6 +131,8 @@ void GameScene::Update() {
 	player_->Update();
 	//更新
 	cameraController_->Update();
+	//敵の更新処理
+	enemy_->Update();
 }
 
 void GameScene::Draw() {
@@ -154,6 +171,9 @@ void GameScene::Draw() {
 	}
 	// 自キャラの描画
 	player_->Draw();
+	//敵描画
+	enemy_->Draw();
+
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
