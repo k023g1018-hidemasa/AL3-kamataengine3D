@@ -111,7 +111,7 @@ void Player::Draw() {
 	ImGui::End();*/
 }
 
-WorldTransform Player::GetWorldTransform() { return WorldTransform(); }
+WorldTransform& Player::GetWorldTransform() { return worldTransform_;}
 
 void Player::TouchCeiling(const CollisionMapInfo& info) {
 	// 天井に当たったか

@@ -53,7 +53,7 @@ public:
 	/// </summary>
 	void Draw();
 
-	WorldTransform GetWorldTransform(); 
+	WorldTransform& GetWorldTransform(); 
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_=mapChipField; };
 	void TouchCeiling(const CollisionMapInfo& info);
 	
