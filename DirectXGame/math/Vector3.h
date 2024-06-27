@@ -13,3 +13,4 @@ struct Vector3 final {
 };
 //二項演算子というもの+-*/当たりの演算子こいつらは外に出す
 Vector3 operator+(const Vector3& objA,const Vector3&objB );
+Vector3 operator*(const Vector3& objA,const Vector3& objB);

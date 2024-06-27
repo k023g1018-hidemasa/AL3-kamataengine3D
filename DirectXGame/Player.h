@@ -34,6 +34,8 @@ public:
 	void Draw();
 
 	WorldTransform& GetWorldTransform(); 
+	//自キャラの速度を取得
+	const Vector3& GetVelocity() const { return velocity_; }//ゲットできてないなぜ//数値が？？？になってるどうゆう状態
 
 private:
 	WorldTransform worldTransform_;
@@ -67,8 +69,6 @@ private:
 	static inline const float kTimeTurn = 0.3f;
 	// 接地状態フラグ
 	bool onGround_ = true;
-	//自キャラの速度を取得
-	const Vector3& GetVelocity() const { return velocity_; }
 	
 
 };

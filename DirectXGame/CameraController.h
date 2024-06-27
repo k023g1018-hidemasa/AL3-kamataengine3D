@@ -49,7 +49,8 @@ private:
 	//速度掛け率　速度に調整用の数値をかけてから足す
 	static inline const float kVelocityBias = 0.2f;
 	
-	Vector3 targetVelosity;
+	
+	Vector3 targetVelosity;//この状態の宣言で大丈夫、中身はｃｐｐで持ってくる
 
 
 };
