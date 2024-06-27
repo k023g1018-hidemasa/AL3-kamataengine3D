@@ -30,7 +30,7 @@ void CameraController::Update() {
 	//追従対象とオフセットからカメラの座標を計算//演算子のエラーもし動かなかったらここが原因かも（VECTOR3）
 	targetVelosity = target_->GetVelocity();//これは命令だからｃｐｐのみに書く
 	targetCoordinates.x = targetWorldTransform.translation_.x + targetOffset_.x+targetVelosity.x*kVelocityBias;//キャラがカメラの後ろに行かなかったらベクター3を見てみて二項演算子の間違いの可能性
-	targetCoordinates.y = targetWorldTransform.translation_.y + targetOffset_.y+targetVelosity.y * kVelocityBias;
+	targetCoordinates.y = targetWorldTransform.translation_.y + targetOffset_.y+targetVelosity.y * kVelocityBias;//数字は取れだしたタッチを押した後に動かすとできる
 	targetCoordinates.z = targetWorldTransform.translation_.z + targetOffset_.z+targetVelosity.z * kVelocityBias;
 
 	//座標保管によりちゅったり追従 targetCoordinates

@@ -35,7 +35,15 @@ public:
 
 	WorldTransform& GetWorldTransform(); 
 	//自キャラの速度を取得
-	const Vector3& GetVelocity() const { return velocity_; }//ゲットできてないなぜ//数値が？？？になってるどうゆう状態
+	const Vector3& GetVelocity() const { 
+	Vector3 ans{};
+	/*	ans.x = kAcceleration;
+	    ans.y = kAcceleration;
+		ans.z = kAcceleration;
+		return ans;*/
+	return velocity_;
+	}//ゲットできてないなぜ//数値が？？？になってるどうゆう状態ウォッチで見てるからそうなってた
+	//んで実際にとってたのはアクス+＝だったからアクスがスピードの数値//どうやってヴェクターを変える？
 
 private:
 	WorldTransform worldTransform_;

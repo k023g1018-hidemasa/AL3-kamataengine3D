@@ -47,10 +47,13 @@ private:
 	//座標保管割合
 	static inline const float kInterpolationRate = 0.2f;
 	//速度掛け率　速度に調整用の数値をかけてから足す
-	static inline const float kVelocityBias = 0.2f;
+	static inline const float kVelocityBias = 10.0f;//値が小さいだけやないかい
+
+
+
 	
 	
-	Vector3 targetVelosity;//この状態の宣言で大丈夫、中身はｃｐｐで持ってくる
+	Vector3 targetVelosity={}; // この状態の宣言で大丈夫、中身はｃｐｐで持ってくる
 
 
 };
