@@ -37,7 +37,7 @@ private:
 	// 座標保管割合
 	static inline const float kInterpolationRate = 0.2f;
 	// 速度掛け率　速度に調整用の数値をかけてから足す
-	static inline const float kVelocityBias = 0.2f;
+	static inline const float kVelocityBias = 15.0f;
 
-	Vector3 targetVelosity;
+	Vector3 targetVelosity = {};
 };

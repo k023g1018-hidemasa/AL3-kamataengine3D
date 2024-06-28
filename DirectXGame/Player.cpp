@@ -193,7 +193,7 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 
 	for (uint32_t i = 0; i < positionsNew.size(); ++i) {
 
-		positionsNew[i] = CornerPostion(worldTransform_.translation_ + info.move, static_cast<Corner>(i));
+		positionsNew[i] = CornerPostion(worldTransform_.translation_ + info.move, static_cast<Corner>(i));//これは移動した後のよんかく
 	}
 
 	MapChipType mapChipType;

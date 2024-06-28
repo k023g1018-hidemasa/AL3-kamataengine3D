@@ -25,12 +25,13 @@ void CameraController::Initalize(ViewProjection* viewprojection) {
 }
 
 void CameraController::Update() {
-	//追従対象のワールドトランスフォームを参照
-	const WorldTransform& targetWorldTransform = target_->GetWorldTransform();//数字が変わってない//カメラも中心じゃなくブロックに向いてる気がするからもしかしたらターゲットの問題？
-	//追従対象とオフセットからカメラの座標を計算//演算子のエラーもし動かなかったらここが原因かも（VECTOR3）
-	targetCoordinates.x = targetWorldTransform.translation_.x + targetOffset_.x;
-	targetCoordinates.y = targetWorldTransform.translation_.y + targetOffset_.y;
-	targetCoordinates.z = targetWorldTransform.translation_.z + targetOffset_.z;
+	// 追従対象のワールドトランスフォームを参照
+	const WorldTransform& targetWorldTransform = target_->GetWorldTransform(); // 数字が変わってない//カメラも中心じゃなくブロックに向いてる気がするからもしかしたらターゲットの問題？
+	// 追従対象とオフセットからカメラの座標を計算//演算子のエラーもし動かなかったらここが原因かも（VECTOR3）
+	targetVelosity = target_->GetVelocity();                                                                        // これは命令だからｃｐｐのみに書く
+	targetCoordinates.x = targetWorldTransform.translation_.x + targetOffset_.x + targetVelosity.x * kVelocityBias; // キャラがカメラの後ろに行かなかったらベクター3を見てみて二項演算子の間違いの可能性
+	targetCoordinates.y = targetWorldTransform.translation_.y + targetOffset_.y + targetVelosity.y * kVelocityBias; // 数字は取れだしたタッチを押した後に動かすとできる
+	targetCoordinates.z = targetWorldTransform.translation_.z + targetOffset_.z + targetVelosity.z * kVelocityBias;
 
 	//座標保管によりちゅったり追従 targetCoordinates
 	viewProjection_->translation_ = Lerp(viewProjection_->translation_, targetCoordinates, kInterpolationRate);

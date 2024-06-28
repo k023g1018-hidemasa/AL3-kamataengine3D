@@ -52,8 +52,18 @@ public:
 	/// 描画処理
 	/// </summary>
 	void Draw();
+	WorldTransform& GetWorldTransform();
+	// 自キャラの速度を取得
+	const Vector3& GetVelocity() const {
+		Vector3 ans{};
+		/*	ans.x = kAcceleration;
+		    ans.y = kAcceleration;
+		    ans.z = kAcceleration;
+		    return ans;*/
+		return velocity_;
+	} // ゲットできてないなぜ//数値が？？？になってるどうゆう状態ウォッチで見てるからそうなってた
+	// んで実際にとってたのはアクス+＝だったからアクスがスピードの数値//どうやってヴェクターを変える？変わってたが数値が低すぎたｋ
 
-	WorldTransform& GetWorldTransform(); 
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_=mapChipField; };
 	void TouchCeiling(const CollisionMapInfo& info);
 	
@@ -97,8 +107,7 @@ private:
 	static inline const float kTimeTurn = 0.3f;
 	// 接地状態フラグ
 	bool onGround_ = true;
-	//自キャラの速度を取得
-	const Vector3& GetVelocity() const { return velocity_; }
+	
 	//マップチップでフィールドを作った
 	MapChipField* mapChipField_ = nullptr;
 

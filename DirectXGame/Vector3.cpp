@@ -12,4 +12,10 @@ Vector3 Vector3::operator+=(const Vector3& obj)
 
 		return num;
 	}
-
+Vector3 operator*(const Vector3& objA, const Vector3& objB) {
+	Vector3 num{};
+	num.x = objA.x * objB.x;
+	num.y = objA.y * objB.y;
+	num.z = objA.z * objB.z;
+	return num;
+}
