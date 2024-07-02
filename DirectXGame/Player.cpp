@@ -189,7 +189,7 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 		return;
 	}
 	// 移動後の四つの過度の座標
-	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionsNew{};
+	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionsNew{};//ここは宣言
 
 	for (uint32_t i = 0; i < positionsNew.size(); ++i) {
 
@@ -201,15 +201,15 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 	bool hit = false;
 	// 左上テンの判定
 	IndexSet indexSet;
-	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]);
-	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
-	if (mapChipType == MapChipType::kBlank) {
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]);//x1y3が正しいかもここはワールド座標でみるといい//ちゃんとうごいた
+	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);//飼料の何処にあんねん
+	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}
 	// 右上点
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kRightTop)]);
 	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);
-	if (mapChipType == MapChipType::kBlank) {
+	if (mapChipType == MapChipType::kBlock) {
 		hit = true;
 	}
 	if (hit) {
