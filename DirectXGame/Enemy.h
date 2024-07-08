@@ -30,8 +30,16 @@ private:
 	uint32_t textureHandle_ = 0u;
 	// マップチップでフィールドを作った
 	MapChipField* mapChipField_ = nullptr;
-	static inline const float kWalkSpeed = 0.2f;
+	static inline const float kWalkSpeed = 0.1f;
 	Vector3 verocity_ = {};
+	//最初の角度（上向き）
+	static inline const float kWalkMotionAngleStart = 30;
+	//最後の角度（下向き）
+	static inline const float kWalkMotionAngleEnd = -30;
+	//アニメーションの周期となる時間
+	static inline const float kWalkMotionTime = 60 * 2;
+	//経過時間
+	float wolkTimer_ = 0.0f;
 
 
 

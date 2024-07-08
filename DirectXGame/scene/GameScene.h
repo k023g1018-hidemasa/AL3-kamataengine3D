@@ -68,13 +68,15 @@ private: // メンバ変数
 	bool isDebugCameraActive_ = false;
 	DebugCamera* debugCamera_ = nullptr;
 
+	//model_ = Model::CreateFromOBJ("")
+
 	//これの名前で呼び出せばｈにあるやつは使えるからわかりやすく？
 	Skydome* skydome_ = nullptr;
 	Model* modelSkydome_ = nullptr;
 
 	MapChipField* mapChipField_;
 	//キャラクターのテクスチャ
-	uint32_t texturHandle_ = 0u;
+	//uint32_t texturHandle_ = 0u;
 
 	Model* model_ = nullptr;
 	Player* player_ = nullptr;
@@ -83,7 +85,7 @@ private: // メンバ変数
 
 	//えねみぃのテクスチャとかドローに使うやつ
 
-	uint32_t enemyTexturHandle_ = 0u;
+	//uint32_t enemyTexturHandle_ = 0u;
 
 	Model* enemyModel_ = nullptr;
 	Enemy* enemy_ = nullptr;

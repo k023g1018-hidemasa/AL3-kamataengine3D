@@ -55,13 +55,14 @@ void GameScene::Initialize() {
 	//ｃｓｖを通った後にジェネレイトをする
 	GenerateBlocks();
 
-	texturHandle_ = TextureManager::Load("sample.png"); // キャラ画像淹れる
+
+	//texturHandle_ = TextureManager::Load("sample.png"); // キャラ画像淹れる
 	model_ = Model::Create();
 	worldTransform_.Initialize();
 
 	//えねみぃのクリエイトとか
 
-	enemyTexturHandle_ = TextureManager::Load("sample.png");
+	//enemyTexturHandle_ = TextureManager::Load("sample.png");
 	enemyModel_ = Model::Create();
 	worldTransform_.Initialize();//いるかな？いらんかな
 
