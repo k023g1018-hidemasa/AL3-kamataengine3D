@@ -30,6 +30,9 @@ private:
 	uint32_t textureHandle_ = 0u;
 	// マップチップでフィールドを作った
 	MapChipField* mapChipField_ = nullptr;
+	static inline const float kWalkSpeed = 0.2f;
+	Vector3 verocity_ = {};
+
 
 
 };
