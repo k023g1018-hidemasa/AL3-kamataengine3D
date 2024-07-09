@@ -10,6 +10,7 @@ void Enemy::Initialize(Model* enemyModel, ViewProjection* viewProjection, const 
 	worldTransform_.Initialize();
 	viewProjection_ = viewProjection;
 	worldTransform_.translation_ = position;//ここで場所を代入している
+	worldTransform_.rotation_.y = std::numbers::pi_v<float> * 3.0f / 2.0f;
 
 	//速度の設定
 	verocity_ = {-kWalkSpeed, 0, 0};
@@ -24,10 +25,9 @@ void Enemy::Update() {
 	//回転アニメーション
 	// 
 	//22pはこの式であってるのか
-	float param= std::sin(wolkTimer_/kWalkMotionTime);
+	float param= std::sin((2*3.14f)*wolkTimer_/kWalkMotionTime);
 	float radian = kWalkMotionAngleStart + kWalkMotionAngleEnd * (param + 1.0f) / 2.0f;
-	worldTransform_.rotation_.z = radian *  (180/3.14f);//よくわからん
-
+	worldTransform_.rotation_.x = radian * 3.14f/360.0f;//よくわからん
 
 
 	//多分アップデートマトリクスがワールド行列の更新？

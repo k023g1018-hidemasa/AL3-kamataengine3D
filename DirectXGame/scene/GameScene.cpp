@@ -57,13 +57,13 @@ void GameScene::Initialize() {
 
 
 	//texturHandle_ = TextureManager::Load("sample.png"); // キャラ画像淹れる
-	model_ = Model::Create();
+	model_ = Model::CreateFromOBJ("AL3_Player", true);
 	worldTransform_.Initialize();
 
 	//えねみぃのクリエイトとか
 
 	//enemyTexturHandle_ = TextureManager::Load("sample.png");
-	enemyModel_ = Model::Create();
+	enemyModel_ = Model::CreateFromOBJ("AL3_Enemy", true);
 	worldTransform_.Initialize();//いるかな？いらんかな
 
 	//座標をマップっチップ 番号で指定
