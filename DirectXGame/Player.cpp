@@ -111,7 +111,7 @@ void Player::Draw() {
 	ImGui::End();*/
 }
 
-WorldTransform& Player::GetWorldTransform() { return worldTransform_;}
+WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
 
 void Player::TouchCeiling(const CollisionMapInfo& info) {
 	// 天井に当たったか
@@ -119,6 +119,36 @@ void Player::TouchCeiling(const CollisionMapInfo& info) {
 		DebugText::GetInstance()->ConsolePrintf("hit ceiling\n");
 		velocity_.y = 0;
 	}
+}
+
+Vector3 Player::GetWorldPosition() {
+	// ワールド座標を入れる変数
+	Vector3 worldPos;
+	// ワールド行列の平行移動成分を取得（ワールド座標）
+	worldPos.x = worldTransform_.matWorld_.m[3][0];
+	worldPos.y = worldTransform_.matWorld_.m[3][1];
+	worldPos.y = worldTransform_.matWorld_.m[3][2];
+
+	return worldPos;
+}
+
+AABB Player::GetAABB() { 
+	
+	Vector3 worldPos = GetWorldPosition();
+
+	AABB aabb;
+	
+	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
+	aabb.max = {worldPos.x + kWidth / 2.0f, worldPos.y + kHeight / 2.0f, worldPos.z + kWidth / 2.0f};
+	
+	return AABB(); 
+}
+
+void Player::OnCollision(const Enemy* enemy) {
+(void)enemy;
+//ジャンプ開始（仮処理）
+velocity_ += Vector3(0.0f,0.15f,0.0f);
+
 }
 
 // 移動りょり

@@ -6,7 +6,7 @@
 //最初の角度は真っすぐを向いた角度で最後の角度は上下合わせた角度
 //求め方は度数砲*π/180＝弧度法らしい3、009（座標）がはなまるぴっぴはよいこだけらしい
 
-
+class Player;
 class MapChipField;
 
 
@@ -22,6 +22,10 @@ public:
 	void Draw();
 
 	void SetMapChipField(MapChipField* mapChipField) { mapChipField_ = mapChipField; };
+	Vector3 GetWorldPosition();
+	AABB GetAABB();
+
+	void OnCollision(const Player* player);
 
 private:
 	Model* enemyModel_=nullptr;
@@ -41,6 +45,9 @@ private:
 	static inline const float kWalkMotionTime = 1.0f;
 	//経過時間
 	float wolkTimer_ = 0.0f;
+	//とぇきの半径
+	static inline const float kWidth = 1.8f;
+	static inline const float kHeight = 1.8f;
 
 
 

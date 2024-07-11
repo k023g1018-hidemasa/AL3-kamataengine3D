@@ -7,6 +7,12 @@
 static const int kRowHeight = 20;
 static const int kColumnWidth = 60;
 
+struct AABB {
+	Vector3 min;
+	Vector3 max;
+};
+
+
 Matrix4x4 MakeRotateXMatrix(float radian);
 
 Matrix4x4 MakeRotateYMatrix(float radian);
@@ -18,3 +24,4 @@ Matrix4x4 MakeScaleMatrix(const Vector3& a);
 Matrix4x4 MakeTranslateMatrix(const Vector3& translate);
 Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Vector3& translate);
 //void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label);
+bool IsCollision(const AABB& aabb1,const AABB& aabb2);

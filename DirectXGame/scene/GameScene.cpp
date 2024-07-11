@@ -26,7 +26,12 @@ GameScene::~GameScene() {
 	delete model_;
 	delete player_;
 
-	delete enemy_;
+
+	for (auto* enemies : enemies_) {//左が自分でなんでも決めれる名前、右が左にコピーする対象したのを変更したら右が（本体）変わる
+		delete enemies;
+	}
+	enemies_.clear();//デリートするときは全部消したいからアドレス
+	//も消すためにいるそれ以外はいらん
 
 
 
@@ -85,11 +90,17 @@ void GameScene::Initialize() {
 	player_->SetMapChipField(mapChipField_);
 
 	/////////////////////敵の生成
-	Vector3 enemyPosition = mapChipField_->GetMaoChipPositionByIndex(15, 18);//初期1でしょう//ｘｙの順番です
-	enemy_= new Enemy();
-	enemy_->Initialize(enemyModel_, &viewProjection_, enemyPosition);
+	for (int32_t i = 0; i < kEnemyNumber; ++i) {
+		Enemy* newEnemy = new Enemy();
+		Vector3 enemyPosition = mapChipField_->GetMaoChipPositionByIndex(15 +i, 18 - i);
+		newEnemy->Initialize(enemyModel_, &viewProjection_, enemyPosition);
+
+		enemies_.push_back(newEnemy);
+	}
+	//enemy_= new Enemy();
+	//enemy_->Initialize(enemyModel_, &viewProjection_, enemyPosition);
 	
-	enemy_->SetMapChipField(mapChipField_);//最後のほうっだしイラン気がする
+	//enemy_->SetMapChipField(mapChipField_);//最後のほうっだしイラン気がする
 
 
 }
@@ -133,7 +144,12 @@ void GameScene::Update() {
 	//更新
 	cameraController_->Update();
 	//敵の更新処理
-	enemy_->Update();
+	for (auto* enemies : enemies_) { // 左が自分でなんでも決めれる名前、右が左にコピーする対象したのを変更したら右が（本体）変わる
+		enemies->Update();	
+	}
+	
+	CheckAllCollision();
+	
 }
 
 void GameScene::Draw() {
@@ -173,7 +189,10 @@ void GameScene::Draw() {
 	// 自キャラの描画
 	player_->Draw();
 	//敵描画
-	enemy_->Draw();
+	for (auto* enemies : enemies_) { // 左が自分でなんでも決めれる名前、右が左にコピーする対象したのを変更したら右が（本体）変わる
+		enemies->Draw();
+	}
+	
 
 
 	/// <summary>
@@ -226,6 +245,33 @@ void GameScene::GenerateBlocks() {
 	}
 	// 要素数を変更する、可変長は最初はゼロだからつ要素を作っている（ｎｗＵ）
 	worldTransformBlocks_.resize(numBlockHorizontal);
+
+
+}
+
+void GameScene::CheckAllCollision() {
+
+	//判定対象1、2の座標
+	AABB aabb1, aabb2;
+	//自キャラの座標
+	aabb1 = player_->GetAABB();//ゲットはちゃんと取得してくれてるけどaabb1,2にわたってないっぽい？
+	//自キャラと敵弾すべての当たり判定
+	for (Enemy* enemy : enemies_) {
+	//敵弾の座標
+		aabb2 = enemy->GetAABB();
+
+		//AABB同士の考査判定
+		if (IsCollision(aabb1, aabb2)) {
+		//ぶつかった時どうするか
+			//自キャラの衝突時コールバックを呼び出す
+			player_->OnCollision(enemy);
+			//敵との衝突時コールバック呼び出し
+			enemy->OnCollision(player_);
+
+		}
+	}
+
+
 
 
 }
