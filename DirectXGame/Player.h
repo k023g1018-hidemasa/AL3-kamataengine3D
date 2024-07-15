@@ -14,7 +14,7 @@ struct CollisionMapInfo {
 	bool ceiling = false;
 	bool landing = false;
 	bool hitWall = false;
-	Vector3 move={0,0,0};
+	Vector3 move={0,0,0};//ここでセットするわけではない？
 };
 // 角
 enum Corner {
@@ -111,8 +111,8 @@ private:
 	//マップチップでフィールドを作った
 	MapChipField* mapChipField_ = nullptr;
 
-	static inline const float kWidth = 0.8f;
-	static inline const float kHeight = 0.8f;
+	static inline const float kWidth = 1.8f;//資料は0.8
+	static inline const float kHeight = 1.8f;
 
 	Vector3 CornerPostion(const Vector3& center, Corner corner);
 	static inline const float kBlank = 0.2f;//めり込まない数値？

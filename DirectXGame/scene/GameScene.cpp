@@ -81,6 +81,7 @@ void GameScene::Initialize() {
 	cameraController_->Reset();
 	//ここに移動範囲の指定？
 
+	//マップチップデータの移行？
 	player_->SetMapChipField(mapChipField_);
 
 	/////////////////////敵の生成
