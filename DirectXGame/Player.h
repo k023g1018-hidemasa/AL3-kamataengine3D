@@ -91,11 +91,11 @@ private:
 	static inline const float kAttenuation = 0.5f;
 	static inline const float kLimitRunSpeed = 0.5f;//motoha1.0
 	// 重力加速度（下方向）
-	static inline const float kGravityAccleration = 0.8f;
+	static inline const float kGravityAccleration = 0.03f;
 	// 最大落下速度（下方向）
 	static inline const float kLimitFallSpeed = 1.2f;
 	// ジャンプ初速（上方向）
-	static inline const float kJumpAccleration = 3.0f;//もともと1.2
+	static inline const float kJumpAccleration = 0.4f;//もともと1.2
 
 	Vector3 velocity_ = {};
 	LRDirection lrDirection_ = LRDirection::kRight;

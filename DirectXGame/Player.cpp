@@ -203,7 +203,7 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 
 	MapChipType mapChipType;
 	// 真上の当たり判定を行う
-	bool hit = false;
+	bool hit = false;//お前ホンマにそこなんか？
 	// 左上テンの判定
 	IndexSet indexSet;
 	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]);//x1y3が正しいかもここはワールド座標でみるといい//ちゃんとうごいた
@@ -219,11 +219,11 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 	}
 	if (hit) {
 		// めり込みを排除する方向に移動量を設定する
-		indexSet = mapChipField_->GetMapChipIndexSetByPosition(Player::worldTransform_.translation_); // ここ穴あき
+		indexSet = mapChipField_->GetMapChipIndexSetByPosition(); // ここ穴あき//ここはぶつかったブロックの底辺//ベクターで返すやつがいる探して
 		// めり込み先ブロックの範囲矩形
 		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
-		info.move.y = std::max(0.0f, rect.bottom - worldTransform_.translation_.y - kHeight / 2.0f); // ｙ移動量5-5-1.8/2//ムーブがゼロ
+		info.move.y = std::max(0.0f, rect.bottom - (worldTransform_.translation_.y + kHeight / 2.0f)); // ｙ移動量5-5-1.8/2//ムーブがゼロ
 		 
 		// 天井に当たったことを記録する
 		info.ceiling = true;
