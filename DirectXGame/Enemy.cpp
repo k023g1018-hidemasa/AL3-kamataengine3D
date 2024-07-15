@@ -20,17 +20,17 @@ void Enemy::Initialize(Model* enemyModel, ViewProjection* viewProjection, const 
 }
 
 void Enemy::Update() { 
-	worldTransform_.translation_ += verocity_;
-	wolkTimer_ += 1.0f / 60.0f;
-	//回転アニメーション
-	// 
-	//22pはこの式であってるのか
-	float param= std::sin((2*3.14f)*wolkTimer_/kWalkMotionTime);
-	float radian = kWalkMotionAngleStart + kWalkMotionAngleEnd * (param + 1.0f) / 2.0f;
-	worldTransform_.rotation_.x = radian * 3.14f/360.0f;//よくわからん
+	//worldTransform_.translation_ += verocity_;
+	//wolkTimer_ += 1.0f / 60.0f;
+	////回転アニメーション
+	//// 
+	////22pはこの式であってるのか
+	//float param= std::sin((2*3.14f)*wolkTimer_/kWalkMotionTime);
+	//float radian = kWalkMotionAngleStart + kWalkMotionAngleEnd * (param + 1.0f) / 2.0f;
+	//worldTransform_.rotation_.x = radian * 3.14f/360.0f;//よくわからん
 
 
-	//多分アップデートマトリクスがワールド行列の更新？
+	////多分アップデートマトリクスがワールド行列の更新？
 	worldTransform_.UpdateMatrix();//これを通ったらアフィンとかを通るからアップデートにはこれが必要
 
 
@@ -48,7 +48,7 @@ Vector3 Enemy::GetWorldPosition() {
 	// ワールド行列の平行移動成分を取得（ワールド座標）
 	worldPos.x = worldTransform_.matWorld_.m[3][0];
 	worldPos.y = worldTransform_.matWorld_.m[3][1];
-	worldPos.y = worldTransform_.matWorld_.m[3][2];
+	worldPos.z = worldTransform_.matWorld_.m[3][2];
 
 	return worldPos;
 }
@@ -62,7 +62,7 @@ AABB Enemy::GetAABB() {
 	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
 	aabb.max = {worldPos.x + kWidth / 2.0f, worldPos.y + kHeight / 2.0f, worldPos.z + kWidth / 2.0f};
 
-	return AABB();
+	return aabb;//リターンの値は上で作ったやつを返してやる
 }
 
 void Enemy::OnCollision(const Player* player) {
