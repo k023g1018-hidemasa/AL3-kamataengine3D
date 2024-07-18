@@ -219,11 +219,11 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 	}
 	if (hit) {
 		// めり込みを排除する方向に移動量を設定する
-		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew); // ここ穴あき//ここはぶつかったブロックの底辺//ベクターで返すやつがいる探して
+		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kRightTop)]); // ここ穴あき//ここはぶつかったブロックの底辺//ベクターで返すやつがいる探して
 		// めり込み先ブロックの範囲矩形
 		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
-		info.move.y = std::max(0.0f, rect.bottom - (worldTransform_.translation_.y + kHeight / 2.0f)); // ｙ移動量5-5-1.8/2//ムーブがゼロ
+		info.move.y = std::max(0.0f, rect.bottom - (worldTransform_.translation_.y - kHeight / 2.0f)); // ｙ移動量5-5-1.8/2//ムーブがゼロ
 		 
 		// 天井に当たったことを記録する
 		info.ceiling = true;
