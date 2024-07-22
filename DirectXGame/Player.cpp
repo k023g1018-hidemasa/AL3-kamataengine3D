@@ -19,8 +19,6 @@ void Player::Initialize(Model* model, ViewProjection* viewProjection, const Vect
 	worldTransform_.translation_ = position;
 	// 初期回転角の指定//Y軸を90度右に回転、2π
 	worldTransform_.rotation_.y = std::numbers::pi_v<float> / 2.0f;
-
-
 }
 void Player::Update() {
 
@@ -40,17 +38,17 @@ void Player::Update() {
 
 	// 接地フラグ
 	bool landing = false;
-	if (onGround_) {
-		FuncMove(); // こっれでええんかな
 	CollisionMapInfo collisionMapInfo;
 	collisionMapInfo.move = velocity_;
 	CollisionMap(collisionMapInfo); // 先生の書き方//衝突判定
-	//判定結果の移動
-	worldTransform_.translation_.x += velocity_.x;
-	worldTransform_.translation_.y += velocity_.y; // ターンタイマーの上？
-	worldTransform_.translation_.z += velocity_.z;
+		TouchCeiling(collisionMapInfo);//オングラウンドの中に入ってた
+	if (onGround_) {//接地状態切り替え
+		FuncMove(); // こっれでええんかな旋回制御？
+		// 判定結果の移動
+		worldTransform_.translation_.x += velocity_.x;
+		worldTransform_.translation_.y += velocity_.y; // ターンタイマーの上？
+		worldTransform_.translation_.z += velocity_.z;
 
-		TouchCeiling(collisionMapInfo);
 		// ジャンプ開始
 		if (velocity_.y > 0.0f) {
 			// 空ちゅう状態に移行
@@ -91,7 +89,6 @@ void Player::Update() {
 		}
 	}
 
-
 	// 千回制御
 	if (turnTimer_ > 0.0f) {
 		// 旋回タイマーをカウントダウン
@@ -116,13 +113,13 @@ void Player::Draw() {
 	ImGui::End();*/
 }
 
-WorldTransform& Player::GetWorldTransform() { return worldTransform_;}
+WorldTransform& Player::GetWorldTransform() { return worldTransform_; }
 
 void Player::TouchCeiling(const CollisionMapInfo& info) {
 	// 天井に当たったか
 	if (info.ceiling) { // 衝突フラグ
 		DebugText::GetInstance()->ConsolePrintf("hit ceiling\n");
-		velocity_.y = 0;
+		velocity_.y = 0; // お前ゼロでええんか
 	}
 }
 
@@ -194,21 +191,21 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 		return;
 	}
 	// 移動後の四つの過度の座標
-	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionsNew{};//ここは宣言
+	std::array<Vector3, static_cast<uint32_t>(Corner::kNumCorner)> positionsNew{}; // ここは宣言
 
 	for (uint32_t i = 0; i < positionsNew.size(); ++i) {
 
-		positionsNew[i] = CornerPostion(worldTransform_.translation_ + info.move, static_cast<Corner>(i));//これは移動した後のよんかく
+		positionsNew[i] = CornerPostion(worldTransform_.translation_ + info.move, static_cast<Corner>(i)); // これは移動した後のよんかく
 	}
 
 	MapChipType mapChipType;
 	// 真上の当たり判定を行う
-	bool hit = false;//お前ホンマにそこなんか？
+	bool hit = false; // お前ホンマにそこなんか？
 	// 左上テンの判定
 	IndexSet indexSet;
-	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]);//x1y3が正しいかもここはワールド座標でみるといい//ちゃんとうごいた
-	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);//飼料の何処にあんねん
-	if (mapChipType == MapChipType::kBlock) {//途中のブロックでもあたってはいる
+	indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]); // x1y3が正しいかもここはワールド座標でみるといい//ちゃんとうごいた
+	mapChipType = mapChipField_->GetMapChipTypeByIndex(indexSet.xIndex, indexSet.yIndex);        // 飼料の何処にあんねん
+	if (mapChipType == MapChipType::kBlock) {                                                    // 途中のブロックでもあたってはいる
 		hit = true;
 	}
 	// 右上点
@@ -223,8 +220,8 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 		// めり込み先ブロックの範囲矩形
 		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
-		info.move.y = std::max(0.0f, rect.bottom - (worldTransform_.translation_.y - kHeight / 2.0f)); // ｙ移動量5-5-1.8/2//ムーブがゼロ
-		 
+		info.move.y = std::max(0.0f, (rect.bottom - worldTransform_.translation_.y) - (0.1f + kHeight / 2.0f)); // ｙ移動量5-5-1.8/2//ムーブがゼロ//
+		                                                                                                        // ブロックの下-自キャラの高さ+キャラの半径
 		// 天井に当たったことを記録する
 		info.ceiling = true;
 	}
@@ -235,9 +232,6 @@ void Player::CollisionMapTop(CollisionMapInfo& info) {
 // void Player::CollisionMapLeft(CollisionMapInfo& info) {}
 //
 // void Player::CollisionMapRight(CollisionMapInfo& info) {}
-
-
-
 
 Vector3 Player::CornerPostion(const Vector3& center, Corner corner) {
 
