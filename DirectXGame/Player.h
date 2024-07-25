@@ -70,7 +70,7 @@ public:
 	
 
 private:
-	void FuncMove();
+	void FuncMove(CollisionMapInfo& info);
 	void FuncOnground(CollisionMapInfo& info);
 	void FuncSky(CollisionMapInfo& info);
 	void CollisionMap(CollisionMapInfo& info);//紺ストは付けない中身は変わるから
@@ -121,5 +121,5 @@ private:
 	static inline const float kBlank = 0.2f;//めり込まない数値？
 
 	static inline const float kAttenutionLanding = 0.4f;//着地時の速度減衰
-	static inline const float kAttenutionWall = 0.4f;
+	static inline const float kAttenutionWall = 0.9f;
 };

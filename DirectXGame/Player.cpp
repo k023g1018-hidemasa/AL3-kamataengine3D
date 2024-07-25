@@ -44,7 +44,8 @@ void Player::Update() {
 	TouchCeiling(collisionMapInfo); // オングラウンドの中に入ってた
 	TouchWell(collisionMapInfo);
 	if (onGround_) { // 接地状態切り替え
-		FuncMove();  // こっれでええんかな旋回制御？
+		FuncOnground(collisionMapInfo);
+		FuncMove(collisionMapInfo);  // こっれでええんかな旋回制御？
 		// 判定結果の移動
 		worldTransform_.translation_.x += velocity_.x;
 		worldTransform_.translation_.y += velocity_.y; // ターンタイマーの上？
@@ -57,39 +58,10 @@ void Player::Update() {
 		}
 		// 移動
 		// 算術演算子が違った
-		worldTransform_.translation_.x += velocity_.x;
-		worldTransform_.translation_.y += velocity_.y; // ターンタイマーの上？//旧
-		worldTransform_.translation_.z += velocity_.z;
 		// 空中
 	} else {
 		FuncSky(collisionMapInfo);
-		/*// 移動
-		worldTransform_.translation_.x += velocity_.x;
-		worldTransform_.translation_.y += velocity_.y;
-		worldTransform_.translation_.z += velocity_.z;
-		// 落下速度
-		velocity_.y += -kGravityAccleration;
-		// 落下速度制限
-		velocity_.y = std::max(velocity_.y, -kLimitFallSpeed);
-		// 地面との当たり判定
-		//  加工中？
-		if (velocity_.y < 0) {
-		    // ｙ座標が地面いかになったら着地
-		    if (worldTransform_.translation_.y <= 2.0f) {
-		        landing = true;
-		    }
-		}
-		if (landing) {
-		    // めり込み排斥
-		    worldTransform_.translation_.y = 2.0f;
-		    // 摩擦で横方向速度が減衰知る
-		    velocity_.x *= (1.0f - kAttenuation); // お前誰やねん
-		    // 下方向速度をリセット
-		    velocity_.y = 0.0f;
-		    // 接地状態に移行
-		    onGround_ = true;
-		}
-		*/
+		
 	}
 
 	// 千回制御
@@ -134,8 +106,12 @@ void Player::TouchWell(const CollisionMapInfo& info) {
 }
 
 // 移動りょり
-void Player::FuncMove() {
+void Player::FuncMove(CollisionMapInfo& info) {
 	// 左右移動操作////	移動入力
+	// 判定結果の移動
+	worldTransform_.translation_.x += info.move.x;
+	worldTransform_.translation_.y += info.move.y; // ターンタイマーの上？//インフォに変えた
+	worldTransform_.translation_.z += info.move.z;
 	if (Input::GetInstance()->PushKey(DIK_RIGHT) || Input::GetInstance()->PushKey(DIK_LEFT)) {
 		// 左右加速
 		Vector3 acceleration = {};
@@ -321,7 +297,7 @@ void Player::CollisionMapBottom(CollisionMapInfo& info) {
 	}
 	if (hit) {
 		// めり込みを排除する方向に移動量を設定する
-		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kRightBottom)]); // ここ穴あき//ここはぶつかったブロックの底辺//ベクターで返すやつがいる探して
+		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kRightBottom)]); 
 		// めり込み先ブロックの範囲矩形
 		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
@@ -336,7 +312,7 @@ void Player::CollisionMapBottom(CollisionMapInfo& info) {
 }
 
 void Player::CollisionMapLeft(CollisionMapInfo& info) {
-	if (info.move.x <= 0) {
+	if (info.move.x >= 0) {
 		return;
 	}
 	// 移動後の四つの過度の座標
@@ -365,18 +341,18 @@ void Player::CollisionMapLeft(CollisionMapInfo& info) {
 	}
 	if (hit) {
 		// めり込みを排除する方向に移動量を設定する
-		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]); // ここ穴あき//ここはぶつかったブロックの底辺//ベクターで返すやつがいる探して
+		indexSet = mapChipField_->GetMapChipIndexSetByPosition(positionsNew[int(Corner::kLeftTop)]);
 		// めり込み先ブロックの範囲矩形
 		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
-		info.move.y = std::max(0.0f, (rect.left - worldTransform_.translation_.x) + (0.1f + kWidth / 2.0f)); // 合ってるか分からん
+		info.move.x = std::max(0.0f, (rect.right - worldTransform_.translation_.x) + (0.2f + kWidth / 2.0f)); // 合ってるか分からん
 
 		info.hitWall = true;
 	}
 }
 
 void Player::CollisionMapRight(CollisionMapInfo& info) {
-	if (info.move.x >= 0) {
+	if (info.move.x <= 0) {
 		return;
 	}
 	// 移動後の四つの過度の座標
@@ -409,7 +385,10 @@ void Player::CollisionMapRight(CollisionMapInfo& info) {
 		// めり込み先ブロックの範囲矩形
 		Rect rect = mapChipField_->GetRectByIndex(indexSet.xIndex, indexSet.yIndex);
 
-		info.move.y = std::max(0.0f, (rect.left - worldTransform_.translation_.x) - (0.1f + kWidth / 2.0f)); // 合ってるか分からん
+		float offSet = (0.2f + kHeight / 2.0f);
+		float rightToTranslation = rect.left - worldTransform_.translation_.x;
+		float moveYoteiX = rightToTranslation - offSet;// ここを分ける                                                       ミニマムかマックスか
+		info.move.x = std::min(0.0f, moveYoteiX);       // 合ってるか分からん
 
 		info.hitWall = true;
 	}
