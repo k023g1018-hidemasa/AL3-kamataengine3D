@@ -96,6 +96,18 @@ bool IsCollision(const AABB& aabb1, const AABB& aabb2) {
 	return false;
 	
 	
+}
+Vector3 Transform(const Vector3& vector, const Matrix4x4& mattrix) {
+	Vector3 result{};
+	result.x = vector.x * mattrix.m[0][0] + vector.y * mattrix.m[1][0] + vector.z * mattrix.m[2][0] + 1.0f * mattrix.m[3][0];
+	result.y = vector.x * mattrix.m[0][1] + vector.y * mattrix.m[1][1] + vector.z * mattrix.m[2][1] + 1.0f * mattrix.m[3][1];
+	result.z = vector.x * mattrix.m[0][2] + vector.y * mattrix.m[1][2] + vector.z * mattrix.m[2][2] + 1.0f * mattrix.m[3][2];
+	float w = vector.x * mattrix.m[0][3] + vector.y * mattrix.m[1][3] + vector.z * mattrix.m[2][3] + 1.0f * mattrix.m[3][3];
+	assert(w != 0.0f);
+	result.x /= w;
+	result.y /= w;
+	result.z /= w;
+	return result;
 };
 //void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label) {
 //	Novice::ScreenPrintf(x, y - 20, "%s", label);

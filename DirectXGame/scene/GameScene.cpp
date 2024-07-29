@@ -33,7 +33,8 @@ GameScene::~GameScene() {
 	enemies_.clear();//デリートするときは全部消したいからアドレス
 	//も消すためにいるそれ以外はいらん
 
-
+	delete deathParticlesModel_;//解放
+	delete deathParticles_;
 
 }
 
@@ -102,6 +103,10 @@ void GameScene::Initialize() {
 	
 	//enemy_->SetMapChipField(mapChipField_);//最後のほうっだしイラン気がする
 
+	////仮の生成処理、後で消す
+	//deathParticles_ = new DeathParticles;
+	//deathParticlesModel_ = Model::CreateFromOBJ("AL3_Enemy", true);
+	//deathParticles_->Initialize(deathParticlesModel_, &viewProjection_, playrePosition);//プレイヤーの位置があってるのかｐ16
 
 }
 
@@ -150,6 +155,10 @@ void GameScene::Update() {
 	
 	CheckAllCollision();
 	
+	if (deathParticles_) {//存在するなら？
+		deathParticles_->Update();
+	}
+
 }
 
 void GameScene::Draw() {
@@ -193,6 +202,10 @@ void GameScene::Draw() {
 		enemies->Draw();
 	}
 	
+	if (deathParticles_) {
+		deathParticles_->Draw();//何が入るの
+
+	}
 
 
 	/// <summary>
@@ -268,6 +281,9 @@ void GameScene::CheckAllCollision() {
 			//敵との衝突時コールバック呼び出し
 			enemy->OnCollision(player_);
 
+			deathParticles_ = new DeathParticles;
+			deathParticlesModel_ = Model::CreateFromOBJ("AL3_Enemy", true);
+			deathParticles_->Initialize(deathParticlesModel_, &viewProjection_, player_->GetWorldPosition()); // プレイヤーの位置があってるのかｐ16
 		}
 	}
 

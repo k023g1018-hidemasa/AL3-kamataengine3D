@@ -15,6 +15,7 @@
 #include"player.h"
 #include"CameraController.h"
 #include"Enemy.h"
+#include"DeathParticles.h"
 
 
 /// <summary>
@@ -90,7 +91,9 @@ private: // メンバ変数
 
 	Model* enemyModel_ = nullptr;
 	std::list<Enemy*> enemies_ ;//リストにしたら入れるのめんどい
-	static inline const int32_t kEnemyNumber = 4;
+	static inline const int32_t kEnemyNumber = 1;
 
+	DeathParticles* deathParticles_ = nullptr;
+	Model* deathParticlesModel_ = nullptr;
 
 };
