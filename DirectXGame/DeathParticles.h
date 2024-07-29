@@ -3,6 +3,7 @@
 #include "Vector3.h"
 #include "ViewProjection.h"
 #include<array>
+#include"WorldTransform.h"
 
 class DeathParticles {
 public:
