@@ -17,6 +17,13 @@
 #include"Enemy.h"
 #include"DeathParticles.h"
 
+//ゲームのフェーズ
+enum class Phase {
+	kPlay,//ゲームプレい
+	kDeath,//です演出
+};
+
+
 
 /// <summary>
 /// ゲームシーン
@@ -52,6 +59,8 @@ public: // メンバ関数
 	void GenerateBlocks();
 	//すべての当たり判定を行う
 	void CheckAllCollision();
+
+	void ChangePhase();
 
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
@@ -95,5 +104,6 @@ private: // メンバ変数
 
 	DeathParticles* deathParticles_ = nullptr;
 	Model* deathParticlesModel_ = nullptr;
-
+	// ゲームの現在のフェーズ（変数）
+	Phase phase_;//変数系はちゃんとプライベートに
 };

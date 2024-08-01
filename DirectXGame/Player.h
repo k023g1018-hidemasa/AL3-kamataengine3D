@@ -63,6 +63,8 @@ public:
 	Vector3 GetWorldPosition();
 	AABB GetAABB();
 	void OnCollision(const Enemy* enemy);
+	//ですフラグ
+	bool IsDead() const { return isDead_; }
 
 private:
 	void FuncMove(CollisionMapInfo& info);
@@ -118,6 +120,9 @@ private:
 	
 	static inline const float kAttenutionLanding = 0.4f; // 着地時の速度減衰
 	static inline const float kAttenutionWall = 0.9f;
+
+	bool isDead_ = false;
+
 
 
 };

@@ -62,7 +62,6 @@ void Player::Update() {
 		FuncSky(collisionMapInfo);
 	}
 
-
 	// 千回制御
 	if (turnTimer_ > 0.0f) {
 		// 旋回タイマーをカウントダウン
@@ -114,24 +113,23 @@ Vector3 Player::GetWorldPosition() {
 	return worldPos;
 }
 
-AABB Player::GetAABB() { 
-	
+AABB Player::GetAABB() {
+
 	Vector3 worldPos = GetWorldPosition();
 
 	AABB aabb;
-	
+
 	aabb.min = {worldPos.x - kWidth / 2.0f, worldPos.y - kHeight / 2.0f, worldPos.z - kWidth / 2.0f};
 	aabb.max = {worldPos.x + kWidth / 2.0f, worldPos.y + kHeight / 2.0f, worldPos.z + kWidth / 2.0f};
-	
+
 	return aabb;
 }
 
 void Player::OnCollision(const Enemy* enemy) {
-(void)enemy;
-//ジャンプ開始（仮処理）
-//velocity_ += Vector3(0.0f,0.15f,0.0f);
-
-
+	(void)enemy;
+	// ジャンプ開始（仮処理）
+	// velocity_ += Vector3(0.0f,0.15f,0.0f);
+	isDead_ = true;//	ここで変更
 }
 
 // 移動りょり
