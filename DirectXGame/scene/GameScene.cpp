@@ -148,8 +148,12 @@ void GameScene::Draw() {
 			blockModel_->Draw(*worldTransformBlock, viewProjection_, blockTextureHandle_);
 		}
 	}
-	// 自キャラの描画
-	player_->Draw();
+
+	if (!player_->IsDead()) {
+		// 自キャラの描画
+		player_->Draw();
+	}
+
 	// 敵描画
 	for (auto* enemies : enemies_) { // 左が自分でなんでも決めれる名前、右が左にコピーする対象したのを変更したら右が（本体）変わる
 		enemies->Draw();
