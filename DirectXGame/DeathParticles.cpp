@@ -44,7 +44,7 @@ void DeathParticles::Update() {
 		// 終了扱いにする
 		isFinished_ = true;
 	}
-	colorG -= 0.01f;
+	colorG -= 0.00f;
 	color_.w = std::clamp(colorG, 0.0f, 1.0f); // 都度変更
 	//色変更オブジェに色の数値おwせってり
 	objectColor_.SetColor(color_);
