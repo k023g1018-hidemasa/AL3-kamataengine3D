@@ -32,8 +32,10 @@ private:
 
 	//存続時間<秒>
 	static inline const float kDuration = 3.0f;
+	static inline const float kDuration = 30.0f;
 	//移動の速さ
 	static inline const float kSpeed = 0.05f;
+	static inline const float kSpeed = 0.35f;
 	//分割した一個分の角度
 	static inline const float kAngleUnit = 3.141592f * 2 / kNumParticles;//PI使えん
 
