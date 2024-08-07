@@ -3,25 +3,21 @@
 #include <algorithm>
 
 void DeathParticles::Initialize(Model* DeathParticlesModel, ViewProjection* viewProjection, const Vector3& position) {
-	DeathParticlesModel_ = DeathParticlesModel;
+	deathParticlesModel_ = DeathParticlesModel;
 	// 行列を定数バッファに転送//定数バッファ＝グラボ
 	viewProjection_ = viewProjection;
+	objectColor_.Initialize();
+	color_ = {1, 1, 1, 1};
+
 	for (auto& worldTransform : worldTransforms_) {
 		worldTransform.Initialize(); // whay
 		worldTransform.translation_ = position;
 	}
-	objectColor_.Initialize();
-	color_ = {1, 1, 1, 1};
-	colorG = 1.0f;
 }
 void DeathParticles::Update() {
 
 	if (isFinished_) {
 		return;
-	}
-	// ワールド返還の更新12ｐ
-	for (auto& worldTransform : worldTransforms_) {
-		worldTransform.UpdateMatrix();
 	}
 
 	for (uint32_t i = 0; i < kNumParticles; ++i) {
@@ -44,12 +40,17 @@ void DeathParticles::Update() {
 		// 終了扱いにする
 		isFinished_ = true;
 	}
-	colorG -= 0.00f;
-	color_.w = std::clamp(colorG, 0.0f, 1.0f); // 都度変更
+	color_.w = std::clamp(color_.w, 0.0f, 1.0f); // 都度変更
+	color_.w += 0.01f;
 	//色変更オブジェに色の数値おwせってり
 	objectColor_.SetColor(color_);
 	//色変更オブジェクトをVramに転送
 	objectColor_.TransferMatrix();
+
+	// ワールド返還の更新12ｐ
+	for (auto& worldTransform : worldTransforms_) {
+		worldTransform.UpdateMatrix();
+	}
 }
 
 void DeathParticles::Draw() {
@@ -59,6 +60,6 @@ void DeathParticles::Draw() {
 		return;
 	}
 	for (auto& worldTransform : worldTransforms_) {
-		DeathParticlesModel_->Draw(worldTransform, *viewProjection_, &objectColor_);
+		deathParticlesModel_->Draw(worldTransform, *viewProjection_, &objectColor_);
 	}
 }

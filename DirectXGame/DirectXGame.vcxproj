@@ -119,6 +119,7 @@
     <ClCompile Include="MTFunction.cpp" />
     <ClCompile Include="Skydome.cpp" />
     <ClCompile Include="MapchipField.cpp" />
+    <ClCompile Include="TitleScene.cpp" />
     <ClCompile Include="Vector3.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="Skydome.h" />
     <ClInclude Include="MapchipField.h" />
     <ClInclude Include="Enemy.h" />
+    <ClInclude Include="TitleScene.h" />
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="Resources\shaders\TerrainPS.hlsl">

@@ -86,16 +86,14 @@ Matrix4x4 MakeAffineMatrix(const Vector3& scale, const Vector3& rotate, const Ve
 
 	return Multiply(Multiply(MakeScaleMatrix(scale), rotateXYZMatrix), MakeTranslateMatrix(translate));
 }
-bool IsCollision(const AABB& aabb1, const AABB& aabb2) {
-	if ((aabb1.min.x<=aabb2.max.x&&aabb1.max.x>=aabb2.min.x)&&
-		(aabb1.min.y <= aabb2.max.y && aabb1.max.y >= aabb2.min.y) &&
-		(aabb1.min.z <= aabb2.max.z && aabb1.max.z >= aabb2.min.z)) {
+bool IsCollision(const AABB& a, const AABB& b) {
+	if ((a.min.x <= b.max.x && a.max.x >= b.min.x) &&
+		(a.min.y <= b.max.y && a.max.y >= b.min.y) &&
+		(a.min.z <= b.max.z && a.max.z >= b.min.z)) {
 
-	return true; 
+		return true;
 	}
 	return false;
-	
-	
 }
 Vector3 Transform(const Vector3& vector, const Matrix4x4& mattrix) {
 	Vector3 result{};
@@ -109,11 +107,11 @@ Vector3 Transform(const Vector3& vector, const Matrix4x4& mattrix) {
 	result.z /= w;
 	return result;
 };
-//void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label) {
+// void MatrixScreenPrintf(int x, int y, const Matrix4x4& matrix, const char* label) {
 //	Novice::ScreenPrintf(x, y - 20, "%s", label);
 //	for (int row = 0; row < 4; ++row) {
 //		for (int column = 0; column < 4; ++column) {
 //			Novice::ScreenPrintf(x + column * kColumnWidth, y + row * kRowHeight, "%6.02f", matrix.m[row][column]);
 //		}
 //	}
-//}
+// }

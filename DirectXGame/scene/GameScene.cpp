@@ -75,6 +75,15 @@ void GameScene::Initialize() {
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, &viewProjection_, playrePosition);
+
+	const Vector3& deathParticlesPosition = playrePosition;
+
+	// 自キャラの座標にですパ初期化ｐ13
+	deathParticles_ = new DeathParticles;
+	deathParticlesModel_ = Model::CreateFromOBJ("AL3_Enemy", true);
+	deathParticles_->Initialize(deathParticlesModel_, &viewProjection_, deathParticlesPosition); // プレイヤーの位置があってるのかｐ16
+
+
 	// カメラ生成
 	cameraController_ = new CameraController();
 	// カメラの初期化
@@ -286,10 +295,10 @@ void GameScene::ChangePhase() {
 			}
 		}
 
+		CheckAllCollision();
+
 		// 死亡演出
 		if (player_->IsDead()) {
-			// 死亡演出切り替え
-			phase_ = Phase::kDeath;
 			// 自キャラの座標を取得
 			const Vector3& deathParticlesPosition = player_->GetWorldPosition();
 
@@ -297,8 +306,10 @@ void GameScene::ChangePhase() {
 			deathParticles_ = new DeathParticles;
 			deathParticlesModel_ = Model::CreateFromOBJ("AL3_Enemy", true);
 			deathParticles_->Initialize(deathParticlesModel_, &viewProjection_, deathParticlesPosition); // プレイヤーの位置があってるのかｐ16
+
+			// 死亡演出切り替え
+			phase_ = Phase::kDeath;
 		}
-		CheckAllCollision();
 
 
 		break;
@@ -344,6 +355,9 @@ void GameScene::ChangePhase() {
 				// 定数バッファに転送
 				worldTransformBlock->TransferMatrix();
 			}
+		}
+		if (deathParticles_ && deathParticles_->IsFinished()) {
+			finished_ = true;
 		}
 
 		break;

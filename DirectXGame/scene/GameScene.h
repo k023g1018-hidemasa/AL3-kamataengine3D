@@ -62,6 +62,8 @@ public: // メンバ関数
 
 	void ChangePhase();
 
+	bool IsFinished() const {return finished_; }
+
 private: // メンバ変数
 	DirectXCommon* dxCommon_ = nullptr;
 	Input* input_ = nullptr;
@@ -106,4 +108,8 @@ private: // メンバ変数
 	Model* deathParticlesModel_ = nullptr;
 	// ゲームの現在のフェーズ（変数）
 	Phase phase_;//変数系はちゃんとプライベートに
+
+	bool finished_ = false;
+
+
 };
