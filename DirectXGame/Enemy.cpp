@@ -20,14 +20,27 @@ void Enemy::Initialize(Model* enemyModel, ViewProjection* viewProjection, const 
 }
 
 void Enemy::Update() { 
-	worldTransform_.translation_ += verocity_;
 	wolkTimer_ += 1.0f / 60.0f;
+	if (worldTransform_.translation_.x <= 0) {
+		SwithSpeed = true;
+	} else if (worldTransform_.translation_.x >= 2 * 60) {
+		SwithSpeed = false;
+	}
+	if (SwithSpeed == true) {
+		worldTransform_.translation_ -= verocity_;
+	} else if (SwithSpeed == false) {
+	worldTransform_.translation_ += verocity_;
+	}
+
+
 	//回転アニメーション
 	// 
 	//22pはこの式であってるのか
 	float param= std::sin((2*3.14f)*wolkTimer_/kWalkMotionTime);
 	float radian = kWalkMotionAngleStart + kWalkMotionAngleEnd * (param + 1.0f) / 2.0f;
 	worldTransform_.rotation_.x = radian * 3.14f/360.0f;//よくわからん
+
+
 
 
 	//多分アップデートマトリクスがワールド行列の更新？

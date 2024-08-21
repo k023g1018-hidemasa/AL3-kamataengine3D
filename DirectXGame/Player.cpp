@@ -37,6 +37,10 @@ void Player::Update() {
 	// 行列計算
 
 	// 接地フラグ
+	if (Input::GetInstance()->PushKey(DIK_X)) {
+		isDead_ = true;
+
+	}
 	CollisionMapInfo collisionMapInfo;
 	collisionMapInfo.move = velocity_;
 	CollisionMap(collisionMapInfo); // 先生の書き方//衝突判定

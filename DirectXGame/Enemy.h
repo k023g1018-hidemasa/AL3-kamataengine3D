@@ -26,6 +26,7 @@ public:
 	AABB GetAABB();
 
 	void OnCollision(const Player* player);
+	bool SwithSpeed = false;
 
 private:
 	Model* enemyModel_=nullptr;
