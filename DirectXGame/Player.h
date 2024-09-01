@@ -5,7 +5,7 @@
 #include "ViewProjection.h"
 #include "WorldTransform.h"
 #include <cassert>
-#include <imgui.h>
+
 #include <numbers>
 
 class MapChipField;
