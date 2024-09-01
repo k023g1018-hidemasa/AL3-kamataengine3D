@@ -158,6 +158,8 @@ void GameScene::Draw() {
 		}
 	}
 
+	goal->draw;
+
 	if (!player_->IsDead()) {
 		// 自キャラの描画
 		player_->Draw();
@@ -170,6 +172,9 @@ void GameScene::Draw() {
 
 	if (deathParticles_) {
 		deathParticles_->Draw(); // 何が入るの
+	}
+	if (goal = true) {
+		gameclea;
 	}
 
 	/// <summary>

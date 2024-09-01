@@ -17,6 +17,8 @@
 #include"Enemy.h"
 #include"DeathParticles.h"
 
+#include"Goal.h"
+
 //ゲームのフェーズ
 enum class Phase {
 	kPlay,//ゲームプレい

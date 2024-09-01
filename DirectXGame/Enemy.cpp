@@ -17,6 +17,7 @@ void Enemy::Initialize(Model* enemyModel, ViewProjection* viewProjection, const 
 	wolkTimer_ = 0.0f;
 
 
+
 }
 
 void Enemy::Update() { 
