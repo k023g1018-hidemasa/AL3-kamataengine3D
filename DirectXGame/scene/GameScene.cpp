@@ -31,9 +31,12 @@ GameScene::~GameScene() {
 	}
 	enemies_.clear(); // デリートするときは全部消したいからアドレス
 	// も消すためにいるそれ以外はいらん
-
 	delete deathParticlesModel_; // 解放
 	delete deathParticles_;
+
+	delete goalModel_;
+	delete goal_;
+
 }
 
 void GameScene::Initialize() {
@@ -69,12 +72,21 @@ void GameScene::Initialize() {
 	enemyModel_ = Model::CreateFromOBJ("AL3_Enemy", true);
 	worldTransform_.Initialize(); // いるかな？いらんかな
 
+	//////////////////////ゴール////////////////////
+	goalModel_ = Model::CreateFromOBJ("Goal", true);
+	worldTransform_.Initialize();
+	goal_ = new Goal();
+	Vector3 goalPosition = mapChipField_->GetMaoChipPositionByIndex(62, 12);//場所//63,12
+	goal_->Initialize(goalModel_, &viewProjection_, goalPosition);
+	////////////////////////////////////////////////////////////////////////
 	// 座標をマップっチップ 番号で指定
 	Vector3 playrePosition = mapChipField_->GetMaoChipPositionByIndex(1, 18);
 	// 自キャラの生成
 	player_ = new Player();
 	// 自キャラの初期化
 	player_->Initialize(model_, &viewProjection_, playrePosition);
+
+
 
 	const Vector3& deathParticlesPosition = playrePosition;
 
@@ -158,7 +170,9 @@ void GameScene::Draw() {
 		}
 	}
 
-	goal->draw;
+	////////////////
+	goal_->Draw();
+	/////////////////////////////////////
 
 	if (!player_->IsDead()) {
 		// 自キャラの描画
@@ -173,9 +187,9 @@ void GameScene::Draw() {
 	if (deathParticles_) {
 		deathParticles_->Draw(); // 何が入るの
 	}
-	if (goal = true) {
+	/*if (goal = true) {
 		gameclea;
-	}
+	}*/
 
 	/// <summary>
 	/// ここに3Dオブジェクトの描画処理を追加できる
@@ -283,6 +297,10 @@ void GameScene::ChangePhase() {
 		player_->Update();
 		// 更新
 		cameraController_->Update();
+		////////////////////////ゴール
+		goal_->Update();
+		////////////////////////////////////////////////////
+
 		
 		// 敵の更新処理
 		for (auto* enemies : enemies_) { // 左が自分でなんでも決めれる名前、右が左にコピーする対象したのを変更したら右が（本体）変わる
@@ -301,6 +319,12 @@ void GameScene::ChangePhase() {
 		}
 
 		CheckAllCollision();
+		if (player_->IsGoal()==true) {
+			phase_ = Phase::kDeath;
+			//ここでシーン遷移
+		}
+
+
 
 		// 死亡演出
 		if (player_->IsDead()) {
@@ -340,6 +364,9 @@ void GameScene::ChangePhase() {
 #endif _DEBUG
 
 		skydome_->Update();
+		////////////////////////ゴール
+		goal_->Update();
+		////////////////////////////////////////////////////
 
 
 		// 更新

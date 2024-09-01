@@ -8,7 +8,7 @@ public:
 Goal();
 ~Goal();
 
-void Initialize(Model* enemyModel, ViewProjection* viewProjection, const Vector3& position);
+void Initialize(Model* goalModel, ViewProjection* viewProjection, const Vector3& position);
 
 void Update();
 

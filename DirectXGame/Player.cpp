@@ -41,6 +41,9 @@ void Player::Update() {
 		isDead_ = true;
 
 	}
+	if (worldTransform_.translation_.x == 63 * 2 || worldTransform_.translation_.y == 12 * 2) {//ゴールと一緒の時
+		isGoal_ = true;
+	}
 	CollisionMapInfo collisionMapInfo;
 	collisionMapInfo.move = velocity_;
 	CollisionMap(collisionMapInfo); // 先生の書き方//衝突判定

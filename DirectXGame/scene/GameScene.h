@@ -113,5 +113,8 @@ private: // メンバ変数
 
 	bool finished_ = false;
 
+	Model* goalModel_ = nullptr;
+	Goal* goal_ = nullptr;
+
 
 };

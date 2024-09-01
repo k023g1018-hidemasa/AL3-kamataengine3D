@@ -65,6 +65,7 @@ public:
 	void OnCollision(const Enemy* enemy);
 	//ですフラグ
 	bool IsDead() const { return isDead_; }
+	bool IsGoal() const { return isGoal_; }
 
 private:
 	void FuncMove(CollisionMapInfo& info);
@@ -122,6 +123,8 @@ private:
 	static inline const float kAttenutionWall = 0.9f;
 
 	bool isDead_ = false;
+
+	bool isGoal_ = false;
 
 
 
